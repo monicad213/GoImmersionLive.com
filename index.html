@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Immersion Week · Go Deeper. Go Further. Go Live.</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #1D4ED8;
+    --teal: #0F6E56;
+    --amber: #BA7517;
+    --offwhite: #F5F3ED;
+    --dark: #1A1A18;
+    --mid: #3D3D3A;
+    --muted: #7A7A74;
+    --border: rgba(0,0,0,0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--dark);
+    color: var(--offwhite);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    background: rgba(26,26,24,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .nav-icon {
+    width: 32px; height: 32px;
+    background: var(--blue);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .nav-icon svg { width: 18px; height: 18px; }
+
+  .nav-wordmark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--offwhite);
+    letter-spacing: 0.01em;
+  }
+
+  .nav-cta {
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+  }
+
+  .nav-cta:hover { background: #1a44c0; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(29,78,216,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 80% 80%, rgba(15,110,86,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 20% at 20% 60%, rgba(186,117,23,0.08) 0%, transparent 50%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(29,78,216,0.15);
+    border: 1px solid rgba(29,78,216,0.3);
+    border-radius: 20px;
+    padding: 0.35rem 1rem;
+    font-size: 12px;
+    font-weight: 500;
+    color: #93b4f7;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    position: relative;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px;
+    background: #93b4f7;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--offwhite);
+    position: relative;
+    animation: fadeUp 0.8s 0.1s ease both;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: #93b4f7;
+  }
+
+  .hero-tagline {
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1.75rem;
+    position: relative;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-description {
+    max-width: 580px;
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(245,243,237,0.65);
+    margin-bottom: 2.5rem;
+    position: relative;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+
+  .btn-primary {
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.85rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: #1a44c0;
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--offwhite);
+    border: 1px solid rgba(245,243,237,0.2);
+    border-radius: 8px;
+    padding: 0.85rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-ghost:hover {
+    border-color: rgba(245,243,237,0.4);
+    transform: translateY(-1px);
+  }
+
+  /* EVENT DETAILS STRIP */
+  .details-strip {
+    background: rgba(255,255,255,0.04);
+    border-top: 1px solid rgba(255,255,255,0.07);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .detail-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .detail-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .detail-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--offwhite);
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 2rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--offwhite);
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title em { font-style: italic; color: #93b4f7; }
+
+  .section-body {
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(245,243,237,0.65);
+    max-width: 640px;
+  }
+
+  /* PILLARS */
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-top: 3rem;
+  }
+
+  .pillar-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 1.75rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .pillar-card:hover {
+    border-color: rgba(29,78,216,0.4);
+    background: rgba(29,78,216,0.06);
+  }
+
+  .pillar-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 18px;
+  }
+
+  .pillar-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--offwhite);
+    margin-bottom: 0.5rem;
+  }
+
+  .pillar-body {
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(245,243,237,0.55);
+  }
+
+  /* RSVP */
+  .rsvp-section {
+    background: rgba(29,78,216,0.08);
+    border: 1px solid rgba(29,78,216,0.2);
+    border-radius: 16px;
+    padding: 3.5rem;
+    text-align: center;
+    margin: 0 2rem 6rem;
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 6rem;
+  }
+
+  .rsvp-form {
+    display: flex;
+    gap: 0.75rem;
+    max-width: 440px;
+    margin: 2rem auto 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .rsvp-input {
+    flex: 1;
+    min-width: 220px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 0.8rem 1.1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--offwhite);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .rsvp-input::placeholder { color: rgba(245,243,237,0.3); }
+  .rsvp-input:focus { border-color: rgba(29,78,216,0.5); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding: 2rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: rgba(245,243,237,0.4);
+  }
+
+  .footer-domain {
+    font-size: 12px;
+    color: rgba(245,243,237,0.25);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-icon">
+      <svg viewBox="0 0 18 18" fill="none">
+        <circle cx="9" cy="9" r="3" fill="white" opacity="0.9"/>
+        <circle cx="9" cy="9" r="6" stroke="white" stroke-width="1" opacity="0.5"/>
+        <circle cx="9" cy="9" r="8.5" stroke="white" stroke-width="0.75" opacity="0.25"/>
+      </svg>
+    </div>
+    <span class="nav-wordmark">Immersion Week</span>
+  </a>
+  <a href="#rsvp" class="nav-cta">Reserve My Spot</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-badge">
+    <div class="badge-dot"></div>
+    Houston, Texas · 2026
+  </div>
+
+  <h1 class="hero-title">
+    <em>Immersion</em> Week
+  </h1>
+
+  <p class="hero-tagline">Go Deeper. Go Further. Go Live.</p>
+
+  <p class="hero-description">
+    One transformative week. 144 extraordinary leaders from around the world.
+    A once-in-a-lifetime experience designed to deepen bonds, sharpen thinking,
+    and forge lifelong relationships that go far beyond the classroom.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#rsvp" class="btn-primary">Reserve My Spot</a>
+    <a href="#about" class="btn-ghost">Learn More</a>
+  </div>
+</div>
+
+<!-- DETAILS STRIP -->
+<div class="details-strip">
+  <div class="detail-item">
+    <span class="detail-label">When</span>
+    <span class="detail-value">Fall 2026 · Dates TBC</span>
+  </div>
+  <div class="detail-item">
+    <span class="detail-label">Where</span>
+    <span class="detail-value">Houston, Texas</span>
+  </div>
+  <div class="detail-item">
+    <span class="detail-label">Who</span>
+    <span class="detail-value">Our Cohort · 144 Leaders</span>
+  </div>
+  <div class="detail-item">
+    <span class="detail-label">Duration</span>
+    <span class="detail-value">One Full Week</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">What is Immersion Week</p>
+  <h2 class="section-title">More than an event.<br><em>A turning point.</em></h2>
+  <p class="section-body">
+    Immersion Week is a deliberately designed experience for our global cohort —
+    a week to step out of the day-to-day and step fully into one another.
+    Through shared challenges, candid conversations, strategic sessions,
+    and unforgettable moments, we go deeper into who we are as leaders,
+    further into what we can build together, and fully alive to the possibilities
+    that emerge when brilliant people commit to one another for life.
+  </p>
+
+  <div class="pillars">
+    <div class="pillar-card">
+      <div class="pillar-icon" style="background:rgba(29,78,216,0.15);">🧭</div>
+      <div class="pillar-title">Leadership & Self</div>
+      <div class="pillar-body">Go deeper into your own leadership identity. Understand how you show up, how you lead under pressure, and how to unlock your full potential.</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-icon" style="background:rgba(15,110,86,0.15);">🤝</div>
+      <div class="pillar-title">Cohort Bonds</div>
+      <div class="pillar-body">144 peers from across the globe — each with a story, a skill, and a perspective. Immersion Week is where professional connections become lifelong friendships.</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-icon" style="background:rgba(186,117,23,0.15);">💡</div>
+      <div class="pillar-title">Strategy & Innovation</div>
+      <div class="pillar-body">Tackle real-world business challenges together. Share frameworks, debate ideas, and leave with sharper strategic thinking and new tools for your career.</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-icon" style="background:rgba(29,78,216,0.12);">🌍</div>
+      <div class="pillar-title">Global Perspective</div>
+      <div class="pillar-body">Our cohort spans continents, industries, and cultures. Immersion Week harnesses that diversity deliberately — because the best ideas emerge at the intersection.</div>
+    </div>
+  </div>
+</section>
+
+<!-- RSVP -->
+<div class="rsvp-section" id="rsvp">
+  <p class="section-label">Save Your Place</p>
+  <h2 class="section-title" style="font-size:2.2rem;">Ready to go <em>all in?</em></h2>
+  <p class="section-body" style="margin: 0 auto; font-size:0.95rem;">
+    Confirm your interest now and be first to receive full details,
+    the agenda, and logistics as they are finalized.
+  </p>
+  <div class="rsvp-form">
+    <input class="rsvp-input" type="email" placeholder="Your email address">
+    <a href="#" class="btn-primary" style="white-space:nowrap;">Count Me In</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Immersion Week · 2026</span>
+  <span class="footer-domain">goimmersionlive.com</span>
+</footer>
+
+</body>
+</html>
