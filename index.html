@@ -58,21 +58,70 @@
     }
     nav .cta-btn:hover { background: var(--navy-dark); }
 
-    /* ── LANGUAGE TOGGLE ── */
+    /* ── FLAG LANGUAGE BUTTONS ── */
     .lang-toggle {
-      display: flex; border: 1.5px solid var(--gray-200); border-radius: 6px; overflow: hidden;
+      display: flex; gap: 4px;
     }
     .lang-toggle button {
-      padding: 0.4rem 0.75rem; font-size: 0.8rem; font-weight: 600;
-      font-family: var(--font-body);
-      border: none; cursor: pointer;
-      background: var(--white); color: var(--gray-400);
-      transition: all 0.2s;
+      width: 38px; height: 26px;
+      border-radius: 4px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      font-size: 0;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.15s, border-color 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
     }
-    .lang-toggle button.active {
-      background: var(--navy); color: var(--white);
+    .lang-toggle button:hover { transform: scale(1.1); }
+    .lang-toggle button.active { border-color: var(--navy); transform: scale(1.1); box-shadow: 0 2px 6px rgba(0,0,0,0.25); }
+
+    /* US Flag — EN */
+    .flag-en {
+      background: linear-gradient(
+        to bottom,
+        #B22234 0%, #B22234 7.7%,
+        #FFFFFF 7.7%, #FFFFFF 15.4%,
+        #B22234 15.4%, #B22234 23.1%,
+        #FFFFFF 23.1%, #FFFFFF 30.8%,
+        #B22234 30.8%, #B22234 38.5%,
+        #FFFFFF 38.5%, #FFFFFF 46.2%,
+        #B22234 46.2%, #B22234 53.8%,
+        #FFFFFF 53.8%, #FFFFFF 61.5%,
+        #B22234 61.5%, #B22234 69.2%,
+        #FFFFFF 69.2%, #FFFFFF 76.9%,
+        #B22234 76.9%, #B22234 84.6%,
+        #FFFFFF 84.6%, #FFFFFF 92.3%,
+        #B22234 92.3%, #B22234 100%
+      );
     }
-    .lang-toggle button:first-child { border-right: 1px solid var(--gray-200); }
+    .flag-en::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 45%; height: 54%;
+      background: #3C3B6E;
+    }
+
+    /* Mexico Flag — ES */
+    .flag-es {
+      background: linear-gradient(
+        to right,
+        #006847 0%, #006847 33.3%,
+        #FFFFFF 33.3%, #FFFFFF 66.6%,
+        #CE1126 66.6%, #CE1126 100%
+      );
+    }
+
+    /* Germany Flag — DE */
+    .flag-de {
+      background: linear-gradient(
+        to bottom,
+        #000000 0%, #000000 33.3%,
+        #DD0000 33.3%, #DD0000 66.6%,
+        #FFCC00 66.6%, #FFCC00 100%
+      );
+    }
 
     /* ── HERO ── */
     .hero {
@@ -120,10 +169,7 @@
       display: grid; grid-template-columns: repeat(4, 1fr);
       background: var(--white); border-bottom: 1px solid var(--gray-200);
     }
-    .stat {
-      text-align: center; padding: 2.5rem 1rem;
-      border-right: 1px solid var(--gray-200);
-    }
+    .stat { text-align: center; padding: 2.5rem 1rem; border-right: 1px solid var(--gray-200); }
     .stat:last-child { border-right: none; }
     .stat .label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 0.5rem; }
     .stat .value { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--navy); }
@@ -192,25 +238,26 @@
       .stats { grid-template-columns: 1fr; }
       .stat { border-right: none; border-bottom: 1px solid var(--gray-200); }
       .stat:last-child { border-bottom: none; }
-      .lang-toggle button { padding: 0.35rem 0.6rem; font-size: 0.75rem; }
+      .lang-toggle button { width: 32px; height: 22px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ═══ NAV ═══ -->
+  <!-- NAV -->
   <nav>
     <a href="#" class="logo">Immersion Live</a>
     <div class="nav-right">
       <div class="lang-toggle">
-        <button class="active" onclick="setLang('en')">EN</button>
-        <button onclick="setLang('es')">ES</button>
+        <button class="flag-en active" onclick="setLang('en')" title="English">EN</button>
+        <button class="flag-es" onclick="setLang('es')" title="Espa&#241;ol">ES</button>
+        <button class="flag-de" onclick="setLang('de')" title="Deutsch">DE</button>
       </div>
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSddcmOTiGoqN4knL_17jGHDDHbPLQp7CwuKqQgE3wsud7d0kQ/viewform" class="cta-btn" data-i18n="nav_cta">Register Now</a>
     </div>
   </nav>
 
-  <!-- ═══ HERO ═══ -->
+  <!-- HERO -->
   <section class="hero">
     <p class="location">Houston, Texas &middot; October 21&ndash;24, 2026</p>
     <h1><em>Immersion</em> Live</h1>
@@ -222,7 +269,7 @@
     </div>
   </section>
 
-  <!-- ═══ STATS BAR ═══ -->
+  <!-- STATS BAR -->
   <div class="stats">
     <div class="stat">
       <div class="label" data-i18n="stat1_label">When</div>
@@ -242,7 +289,7 @@
     </div>
   </div>
 
-  <!-- ═══ ABOUT ═══ -->
+  <!-- ABOUT -->
   <section class="section" id="about">
     <div class="section-inner">
       <p class="section-label" data-i18n="about_label">What is Immersion Live</p>
@@ -276,7 +323,7 @@
     </div>
   </section>
 
-  <!-- ═══ SCHEDULE ═══ -->
+  <!-- SCHEDULE -->
   <section class="section schedule" id="schedule">
     <div class="section-inner">
       <p class="section-label" data-i18n="sched_label">The Agenda</p>
@@ -329,7 +376,7 @@
     </div>
   </section>
 
-  <!-- ═══ SPEAKERS & EXPERIENCES ═══ -->
+  <!-- SPEAKERS & EXPERIENCES -->
   <section class="section" id="speakers">
     <div class="section-inner">
       <p class="section-label" data-i18n="exp_label">What Awaits</p>
@@ -378,84 +425,136 @@
     </div>
   </section>
 
-  <!-- ═══ CTA ═══ -->
+  <!-- CTA -->
   <section class="section cta-section" id="register">
     <div class="section-inner" style="max-width: 650px;">
-      <p class="section-label" style="color: var(--gold-light);" data-i18n="cta_label">Save Your Place</p>
+      <p class="section-label" style="color: var(--gold-light);" data-i18n="cta_label">Registration Is Open</p>
       <h2 data-i18n="cta_heading">Spots are filling.</h2>
-      <p data-i18n-html="cta_desc">Registrations are open and our cohort is responding.<br />Secure your place now &mdash; dates, speakers, and field trips are confirmed.</p>
+      <p data-i18n-html="cta_desc">Complete the registration form to secure your place. Dates, speakers, and field trips are confirmed.<br />We&rsquo;ll follow up with logistics, hotel recommendations, and the full agenda.</p>
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSddcmOTiGoqN4knL_17jGHDDHbPLQp7CwuKqQgE3wsud7d0kQ/viewform" class="btn-primary" data-i18n="cta_btn">Register Now</a>
+      <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.6;" data-i18n="cta_updates">Check back here for updates as details are finalized.</p>
     </div>
   </section>
 
-  <!-- ═══ FOOTER ═══ -->
+  <!-- FOOTER -->
   <footer>
     <div>Immersion Live &middot; October 21&ndash;24, 2026 &middot; Houston, TX</div>
     <div><a href="https://goimmersionlive.com">goimmersionlive.com</a></div>
     <div class="disclaimer" data-i18n="disclaimer">This is an independently organized event by participants of the MIT Professional Education CXO Program. It is not affiliated with, endorsed by, or sponsored by MIT.</div>
   </footer>
 
-  <!-- ═══ TRANSLATION ENGINE ═══ -->
+  <!-- TRANSLATION ENGINE -->
   <script>
     var translations = {
       es: {
-        nav_cta: "Reg\u00edstrate Ahora",
-        hero_tagline: "M\u00e1s Profundo. M\u00e1s Lejos. En Vivo.",
-        hero_subtitle: "Cuatro d\u00edas de ponentes seleccionados, visitas exclusivas y conexiones reales \u2014 con 144 l\u00edderes de 44 pa\u00edses.<br />Llega antes o qu\u00e9date m\u00e1s tiempo para aprovechar Houston al m\u00e1ximo. El programa estructurado es del 21 al 24 de octubre.",
-        hero_cta: "Reg\u00edstrate Ahora",
-        hero_learn: "M\u00e1s Informaci\u00f3n",
-        stat1_label: "Cu\u00e1ndo",
-        stat2_label: "D\u00f3nde",
-        stat3_label: "Qui\u00e9nes",
-        stat3_value: "Nuestra Cohorte \u00b7 144 L\u00edderes \u00b7 44 Pa\u00edses",
-        stat4_label: "Programa",
-        stat4_value: "4 D\u00edas \u00b7 Extiende Tu Estancia",
-        about_label: "Qu\u00e9 es Immersion Live",
-        about_heading: "M\u00e1s que un evento. <em>Un punto de inflexi\u00f3n.</em>",
-        about_p1: "Immersion Live es una experiencia dise\u00f1ada deliberadamente para nuestra cohorte global \u2014 cuatro d\u00edas de programaci\u00f3n estructurada en torno a experiencias de campo en la NASA y la infraestructura de IA de Houston, conversaciones con l\u00edderes de NVIDIA, HPE y el sector energ\u00e9tico, y tiempo libre para conexiones reales. Profundizamos en qui\u00e9nes somos como l\u00edderes y avanzamos en lo que podemos construir juntos.",
-        about_p2: "El programa es del 21 al 24 de octubre. Muchos participantes eligen llegar un d\u00eda antes o quedarse el fin de semana para continuar la conversaci\u00f3n a su propio ritmo.",
-        about_p3: "Esta es la segunda vez que nos reunimos como cohorte, y no volveremos a encontrarnos hasta marzo de 2027. Las relaciones que formemos en Houston nos acompa\u00f1ar\u00e1n hasta entonces.",
-        pillar1_title: "Liderazgo y Autoconocimiento",
-        pillar1_desc: "Profundiza en tu identidad como l\u00edder a trav\u00e9s de foros entre pares y sesiones moderadas donde los l\u00edderes comparten momentos decisivos, fracasos y avances reales.",
-        pillar2_title: "V\u00ednculos de Cohorte",
-        pillar2_desc: "144 colegas de 44 pa\u00edses. Asientos rotados en cada comida. Grupos de trabajo de 8 a 10 personas. Noches libres para explorar Houston juntos. Aqu\u00ed es donde las conexiones profesionales se convierten en amistades para toda la vida.",
-        pillar3_title: "Estrategia e Innovaci\u00f3n",
-        pillar3_desc: "Recorre un centro de datos de IA. Entra al Control de Misi\u00f3n de la NASA. Escucha a l\u00edderes de NVIDIA, HPE y energ\u00eda renovable. Luego si\u00e9ntate con tus colegas y pregunta: \u00bfqu\u00e9 significa esto para mi organizaci\u00f3n?",
-        pillar4_title: "Perspectiva Global",
-        pillar4_desc: "Nuestra cohorte abarca continentes, industrias y culturas. Immersion Live aprovecha esa diversidad deliberadamente \u2014 con emparejamiento de socios de responsabilidad y sesiones de proyectos de impacto dise\u00f1adas para trascender el evento.",
-        sched_label: "La Agenda",
-        sched_heading: "Cuatro d\u00edas. <em>Sin relleno.</em>",
-        sched_desc: "Cada sesi\u00f3n est\u00e1 dise\u00f1ada bajo un principio: menos es m\u00e1s. Uno o dos ponentes al d\u00eda. Visitas que no puedes conseguir por tu cuenta. Y horas de tiempo libre \u2014 porque las mejores conversaciones no ocurren seg\u00fan un horario.",
-        day1_label: "D\u00eda 1", day1_date: "Mi\u00e9rcoles, Oct 21",
-        day1_1: "Llegada y Registro", day1_2: "Recepci\u00f3n de Bienvenida", day1_3: "Keynote de NVIDIA", day1_4: "Cena de Apertura",
-        day2_label: "D\u00eda 2", day2_date: "Jueves, Oct 22",
-        day2_1: "Tour al Centro de Datos de IA", day2_2: "Ponencia HPE", day2_3: "Sesiones de Trabajo en Grupo", day2_4: "Noche Libre",
-        day3_label: "D\u00eda 3", day3_date: "Viernes, Oct 23",
-        day3_1: "NASA Johnson Space Center", day3_2: "Ponencia: Energ\u00eda e IA", day3_3: "Foro de Liderazgo", day3_4: "Opcional: Vi\u00f1edo en Texas", day3_5: "Cena de Gala",
-        day4_label: "D\u00eda 4", day4_date: "S\u00e1bado, Oct 24",
-        day4_1: "Ponencia HPE", day4_2: "Taller de Proyectos de Impacto", day4_3: "Sesi\u00f3n de Cierre", day4_4: "Almuerzo de Despedida",
-        exp_label: "Lo Que Te Espera",
-        exp_heading: "A qui\u00e9n escuchar\u00e1s. <em>Lo que ver\u00e1s.</em>",
-        speakers_title: "Ponentes",
-        spk1: "La revoluci\u00f3n de la IA desde la capa de hardware",
-        spk2: "IA ag\u00e9ntica en redes empresariales a trav\u00e9s de las plataformas Juniper y Aruba",
-        spk3: "Morpheus, PCAI y la simplificaci\u00f3n de cargas de trabajo de IA para empresas",
-        spk4_name: "L\u00edderes en Energ\u00eda Renovable",
-        spk4: "C\u00f3mo la IA est\u00e1 transformando la infraestructura energ\u00e9tica y la sostenibilidad a escala",
-        spk5_name: "Facultad del MIT",
-        spk5_tag: "(invitado)",
-        spk5: "Keynote virtual sobre gobernanza de IA y liderazgo tecnol\u00f3gico",
-        field_title: "Experiencias de Campo",
-        fld1_name: "Tour al Centro de Datos de IA",
-        fld1: "Recorre una instalaci\u00f3n de IA y computaci\u00f3n de alto rendimiento en vivo \u2014 cl\u00fasteres de GPU, IA ag\u00e9ntica e infraestructura empresarial en operaci\u00f3n",
-        fld2: "Acceso exclusivo al Control de Misi\u00f3n, entrenamiento de astronautas y laboratorios de innovaci\u00f3n",
-        fld3_name: "Excursi\u00f3n a Vi\u00f1edo en Texas",
-        fld3: "Salida opcional por la tarde para quienes deseen una experiencia social relajada (D\u00eda 3)",
-        cta_label: "Reserva Tu Lugar",
-        cta_heading: "Los lugares se est\u00e1n llenando.",
-        cta_desc: "Las inscripciones est\u00e1n abiertas y nuestra cohorte est\u00e1 respondiendo.<br />Asegura tu lugar ahora \u2014 fechas, ponentes y visitas est\u00e1n confirmados.",
-        cta_btn: "Reg\u00edstrate Ahora",
-        disclaimer: "Este es un evento organizado de forma independiente por participantes del Programa CXO de MIT Professional Education. No est\u00e1 afiliado, respaldado ni patrocinado por MIT."
+        nav_cta:"Reg\u00edstrate Ahora",
+        hero_tagline:"M\u00e1s Profundo. M\u00e1s Lejos. En Vivo.",
+        hero_subtitle:"Cuatro d\u00edas de ponentes seleccionados, visitas exclusivas y conexiones reales \u2014 con 144 l\u00edderes de 44 pa\u00edses.<br />Llega antes o qu\u00e9date m\u00e1s tiempo para aprovechar Houston al m\u00e1ximo. El programa es del 21 al 24 de octubre.",
+        hero_cta:"Reg\u00edstrate Ahora", hero_learn:"M\u00e1s Informaci\u00f3n",
+        stat1_label:"Cu\u00e1ndo", stat2_label:"D\u00f3nde", stat3_label:"Qui\u00e9nes",
+        stat3_value:"Nuestra Cohorte \u00b7 144 L\u00edderes \u00b7 44 Pa\u00edses",
+        stat4_label:"Programa", stat4_value:"4 D\u00edas \u00b7 Extiende Tu Estancia",
+        about_label:"Qu\u00e9 es Immersion Live",
+        about_heading:"M\u00e1s que un evento. <em>Un punto de inflexi\u00f3n.</em>",
+        about_p1:"Immersion Live es una experiencia dise\u00f1ada deliberadamente para nuestra cohorte global \u2014 cuatro d\u00edas de programaci\u00f3n estructurada en torno a experiencias de campo en la NASA y la infraestructura de IA de Houston, conversaciones con l\u00edderes de NVIDIA, HPE y el sector energ\u00e9tico, y tiempo libre para conexiones reales. Profundizamos en qui\u00e9nes somos como l\u00edderes y avanzamos en lo que podemos construir juntos.",
+        about_p2:"El programa es del 21 al 24 de octubre. Muchos participantes eligen llegar un d\u00eda antes o quedarse el fin de semana para continuar la conversaci\u00f3n a su propio ritmo.",
+        about_p3:"Esta es la segunda vez que nos reunimos como cohorte, y no volveremos a encontrarnos hasta marzo de 2027. Las relaciones que formemos en Houston nos acompa\u00f1ar\u00e1n hasta entonces.",
+        pillar1_title:"Liderazgo y Autoconocimiento",
+        pillar1_desc:"Profundiza en tu identidad como l\u00edder a trav\u00e9s de foros entre pares y sesiones moderadas donde los l\u00edderes comparten momentos decisivos, fracasos y avances reales.",
+        pillar2_title:"V\u00ednculos de Cohorte",
+        pillar2_desc:"144 colegas de 44 pa\u00edses. Asientos rotados en cada comida. Grupos de trabajo de 8 a 10 personas. Noches libres para explorar Houston juntos. Aqu\u00ed es donde las conexiones profesionales se convierten en amistades para toda la vida.",
+        pillar3_title:"Estrategia e Innovaci\u00f3n",
+        pillar3_desc:"Recorre un centro de datos de IA. Entra al Control de Misi\u00f3n de la NASA. Escucha a l\u00edderes de NVIDIA, HPE y energ\u00eda renovable. Luego si\u00e9ntate con tus colegas y pregunta: \u00bfqu\u00e9 significa esto para mi organizaci\u00f3n?",
+        pillar4_title:"Perspectiva Global",
+        pillar4_desc:"Nuestra cohorte abarca continentes, industrias y culturas. Immersion Live aprovecha esa diversidad deliberadamente \u2014 con emparejamiento de socios de responsabilidad y sesiones de proyectos de impacto dise\u00f1adas para trascender el evento.",
+        sched_label:"La Agenda",
+        sched_heading:"Cuatro d\u00edas. <em>Sin relleno.</em>",
+        sched_desc:"Cada sesi\u00f3n est\u00e1 dise\u00f1ada bajo un principio: menos es m\u00e1s. Uno o dos ponentes al d\u00eda. Visitas que no puedes conseguir por tu cuenta. Y horas de tiempo libre \u2014 porque las mejores conversaciones no ocurren seg\u00fan un horario.",
+        day1_label:"D\u00eda 1", day1_date:"Mi\u00e9rcoles, Oct 21",
+        day1_1:"Llegada y Registro", day1_2:"Recepci\u00f3n de Bienvenida", day1_3:"Keynote de NVIDIA", day1_4:"Cena de Apertura",
+        day2_label:"D\u00eda 2", day2_date:"Jueves, Oct 22",
+        day2_1:"Tour al Centro de Datos de IA", day2_2:"Ponencia HPE", day2_3:"Sesiones de Trabajo en Grupo", day2_4:"Noche Libre",
+        day3_label:"D\u00eda 3", day3_date:"Viernes, Oct 23",
+        day3_1:"NASA Johnson Space Center", day3_2:"Ponencia: Energ\u00eda e IA", day3_3:"Foro de Liderazgo", day3_4:"Opcional: Vi\u00f1edo en Texas", day3_5:"Cena de Gala",
+        day4_label:"D\u00eda 4", day4_date:"S\u00e1bado, Oct 24",
+        day4_1:"Ponencia HPE", day4_2:"Taller de Proyectos de Impacto", day4_3:"Sesi\u00f3n de Cierre", day4_4:"Almuerzo de Despedida",
+        exp_label:"Lo Que Te Espera",
+        exp_heading:"A qui\u00e9n escuchar\u00e1s. <em>Lo que ver\u00e1s.</em>",
+        speakers_title:"Ponentes",
+        spk1:"La revoluci\u00f3n de la IA desde la capa de hardware",
+        spk2:"IA ag\u00e9ntica en redes empresariales a trav\u00e9s de las plataformas Juniper y Aruba",
+        spk3:"Morpheus, PCAI y la simplificaci\u00f3n de cargas de trabajo de IA para empresas",
+        spk4_name:"L\u00edderes en Energ\u00eda Renovable",
+        spk4:"C\u00f3mo la IA est\u00e1 transformando la infraestructura energ\u00e9tica y la sostenibilidad a escala",
+        spk5_name:"Facultad del MIT", spk5_tag:"(invitado)",
+        spk5:"Keynote virtual sobre gobernanza de IA y liderazgo tecnol\u00f3gico",
+        field_title:"Experiencias de Campo",
+        fld1_name:"Tour al Centro de Datos de IA",
+        fld1:"Recorre una instalaci\u00f3n de IA y computaci\u00f3n de alto rendimiento en vivo \u2014 cl\u00fasteres de GPU, IA ag\u00e9ntica e infraestructura empresarial en operaci\u00f3n",
+        fld2:"Acceso exclusivo al Control de Misi\u00f3n, entrenamiento de astronautas y laboratorios de innovaci\u00f3n",
+        fld3_name:"Excursi\u00f3n a Vi\u00f1edo en Texas",
+        fld3:"Salida opcional por la tarde para quienes deseen una experiencia social relajada (D\u00eda 3)",
+        cta_label:"Inscripci\u00f3n Abierta",
+        cta_heading:"Los lugares se est\u00e1n llenando.",
+        cta_desc:"Completa el formulario de inscripci\u00f3n para asegurar tu lugar. Fechas, ponentes y visitas est\u00e1n confirmados.<br />Te enviaremos informaci\u00f3n sobre log\u00edstica, hoteles recomendados y la agenda completa.",
+        cta_btn:"Reg\u00edstrate Ahora",
+        cta_updates:"Vuelve a consultar esta p\u00e1gina para actualizaciones a medida que se finalicen los detalles.",
+        disclaimer:"Este es un evento organizado de forma independiente por participantes del Programa CXO de MIT Professional Education. No est\u00e1 afiliado, respaldado ni patrocinado por MIT."
+      },
+      de: {
+        nav_cta:"Jetzt Registrieren",
+        hero_tagline:"Tiefer. Weiter. Live.",
+        hero_subtitle:"Vier Tage mit ausgew\u00e4hlten Rednern, exklusiven Besichtigungen und echten Verbindungen \u2014 mit 144 F\u00fchrungskr\u00e4ften aus 44 L\u00e4ndern.<br />Reisen Sie fr\u00fcher an oder verl\u00e4ngern Sie Ihren Aufenthalt, um Houston voll auszukosten. Das strukturierte Programm l\u00e4uft vom 21. bis 24. Oktober.",
+        hero_cta:"Jetzt Registrieren", hero_learn:"Mehr Erfahren",
+        stat1_label:"Wann", stat2_label:"Wo", stat3_label:"Wer",
+        stat3_value:"Unsere Kohorte \u00b7 144 F\u00fchrungskr\u00e4fte \u00b7 44 L\u00e4nder",
+        stat4_label:"Programm", stat4_value:"4 Tage \u00b7 Aufenthalt Verl\u00e4ngern",
+        about_label:"Was ist Immersion Live",
+        about_heading:"Mehr als ein Event. <em>Ein Wendepunkt.</em>",
+        about_p1:"Immersion Live ist ein bewusst gestaltetes Erlebnis f\u00fcr unsere globale Kohorte \u2014 vier Tage strukturiertes Programm rund um Vor-Ort-Erfahrungen bei der NASA und Houstons KI-Infrastruktur, offene Gespr\u00e4che mit F\u00fchrungskr\u00e4ften von NVIDIA, HPE und dem Energiesektor sowie freie Zeit f\u00fcr echte Verbindungen. Wir vertiefen, wer wir als F\u00fchrungskr\u00e4fte sind, und entwickeln gemeinsam weiter, was wir zusammen aufbauen k\u00f6nnen.",
+        about_p2:"Das Programm l\u00e4uft vom 21. bis 24. Oktober. Viele Teilnehmer entscheiden sich, einen Tag fr\u00fcher anzureisen oder \u00fcber das Wochenende zu bleiben, um das Gespr\u00e4ch in ihrem eigenen Tempo fortzusetzen.",
+        about_p3:"Dies ist unser zweites Treffen als Kohorte, und wir werden uns erst im M\u00e4rz 2027 wiedersehen. Die Beziehungen, die wir in Houston aufbauen, werden uns bis dahin tragen.",
+        pillar1_title:"F\u00fchrung & Selbsterkenntnis",
+        pillar1_desc:"Vertiefen Sie Ihre F\u00fchrungsidentit\u00e4t durch Peer-Foren und moderierte Sitzungen, in denen F\u00fchrungskr\u00e4fte echte Wendepunkte, Misserfolge und Durchbr\u00fcche teilen.",
+        pillar2_title:"Kohorte & Verbundenheit",
+        pillar2_desc:"144 Kollegen aus 44 L\u00e4ndern. Wechselnde Sitzordnung bei jeder Mahlzeit. Kleingruppen von 8\u201310 Personen. Freie Abende, um Houston gemeinsam zu erkunden. Hier werden berufliche Kontakte zu lebenslangen Freundschaften.",
+        pillar3_title:"Strategie & Innovation",
+        pillar3_desc:"Besichtigen Sie ein KI-Rechenzentrum. Stehen Sie in der NASA-Missionskontrolle. H\u00f6ren Sie F\u00fchrungskr\u00e4fte von NVIDIA, HPE und erneuerbaren Energien. Dann setzen Sie sich mit Ihren Kollegen zusammen und fragen: Was bedeutet das f\u00fcr meine Organisation?",
+        pillar4_title:"Globale Perspektive",
+        pillar4_desc:"Unsere Kohorte umfasst Kontinente, Branchen und Kulturen. Immersion Live nutzt diese Vielfalt bewusst \u2014 mit Accountability-Partnerschaften und Impact-Projekt-Workshops, die \u00fcber das Event hinaus wirken.",
+        sched_label:"Das Programm",
+        sched_heading:"Vier Tage. <em>Ohne F\u00fcllmaterial.</em>",
+        sched_desc:"Jede Session folgt einem Prinzip: Weniger ist mehr. Ein bis zwei Redner pro Tag. Besichtigungen, die Sie allein nicht bekommen. Und Stunden freier Zeit \u2014 weil die besten Gespr\u00e4che nicht nach Zeitplan stattfinden.",
+        day1_label:"Tag 1", day1_date:"Mittwoch, 21. Okt.",
+        day1_1:"Anreise & Check-in", day1_2:"Willkommensempfang", day1_3:"NVIDIA Keynote", day1_4:"Er\u00f6ffnungsdinner",
+        day2_label:"Tag 2", day2_date:"Donnerstag, 22. Okt.",
+        day2_1:"KI-Rechenzentrum Tour", day2_2:"HPE Vortrag", day2_3:"Peer-Breakout-Sessions", day2_4:"Freier Abend",
+        day3_label:"Tag 3", day3_date:"Freitag, 23. Okt.",
+        day3_1:"NASA Johnson Space Center", day3_2:"Vortrag: Energie & KI", day3_3:"F\u00fchrungsforum", day3_4:"Optional: Weingut in Texas", day3_5:"Gala-Dinner",
+        day4_label:"Tag 4", day4_date:"Samstag, 24. Okt.",
+        day4_1:"HPE Vortrag", day4_2:"Impact-Projekt-Workshop", day4_3:"Abschlusssitzung", day4_4:"Abschieds-Lunch",
+        exp_label:"Was Sie Erwartet",
+        exp_heading:"Wen Sie h\u00f6ren werden. <em>Was Sie sehen werden.</em>",
+        speakers_title:"Redner",
+        spk1:"Die KI-Revolution von der Hardware-Ebene aufw\u00e4rts",
+        spk2:"Agentische KI in Unternehmensnetzwerken \u00fcber Juniper- und Aruba-Plattformen",
+        spk3:"Morpheus, PCAI und die Vereinfachung von KI-Workloads f\u00fcr Unternehmen",
+        spk4_name:"F\u00fchrungskr\u00e4fte Erneuerbare Energien",
+        spk4:"Wie KI die Energieinfrastruktur und Nachhaltigkeit im gro\u00dfen Ma\u00dfstab transformiert",
+        spk5_name:"MIT-Fakult\u00e4t", spk5_tag:"(eingeladen)",
+        spk5:"Virtuelle Keynote zu KI-Governance und Technologie-F\u00fchrung",
+        field_title:"Vor-Ort-Erlebnisse",
+        fld1_name:"KI-Rechenzentrum Tour",
+        fld1:"Besichtigen Sie eine aktive KI- und Hochleistungsrechenanlage \u2014 GPU-Cluster, agentische KI und Unternehmensinfrastruktur im Betrieb",
+        fld2:"Exklusiver Zugang zur Missionskontrolle, Astronautentraining und Innovationslaboren",
+        fld3_name:"Weingut-Ausflug in Texas",
+        fld3:"Optionaler Nachmittagsausflug f\u00fcr alle, die ein entspanntes soziales Erlebnis bevorzugen (Tag 3)",
+        cta_label:"Anmeldung Ge\u00f6ffnet",
+        cta_heading:"Die Pl\u00e4tze f\u00fcllen sich.",
+        cta_desc:"F\u00fcllen Sie das Anmeldeformular aus, um Ihren Platz zu sichern. Termine, Redner und Besichtigungen sind best\u00e4tigt.<br />Wir melden uns mit Logistik, Hotelempfehlungen und dem vollst\u00e4ndigen Programm.",
+        cta_btn:"Jetzt Registrieren",
+        cta_updates:"Schauen Sie hier regelm\u00e4\u00dfig vorbei f\u00fcr Aktualisierungen.",
+        disclaimer:"Dies ist eine unabh\u00e4ngig organisierte Veranstaltung von Teilnehmern des MIT Professional Education CXO-Programms. Sie ist nicht mit dem MIT verbunden, wird nicht vom MIT unterst\u00fctzt oder gesponsert."
       }
     };
 
@@ -476,16 +575,16 @@
         btn.classList.remove("active");
       });
       if (event && event.target) { event.target.classList.add("active"); }
-      document.documentElement.lang = lang === "es" ? "es" : "en";
+      document.documentElement.lang = lang;
 
-      if (lang === "es") {
+      if (translations[lang]) {
         document.querySelectorAll("[data-i18n]").forEach(function(el) {
           var key = el.getAttribute("data-i18n");
-          if (translations.es[key]) el.textContent = translations.es[key];
+          if (translations[lang][key]) el.textContent = translations[lang][key];
         });
         document.querySelectorAll("[data-i18n-html]").forEach(function(el) {
           var key = el.getAttribute("data-i18n-html");
-          if (translations.es[key]) el.innerHTML = translations.es[key];
+          if (translations[lang][key]) el.innerHTML = translations[lang][key];
         });
       } else {
         document.querySelectorAll("[data-i18n]").forEach(function(el) {
