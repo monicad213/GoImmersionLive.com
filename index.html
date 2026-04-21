@@ -1,540 +1,447 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Immersion Week · Go Deeper. Go Further. Go Live.</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Immersion Week &middot; Go Deeper. Go Further. Go Live.</title>
+  <meta name="description" content="Immersion Week — October 21–24, 2026 in Houston, Texas. 144 leaders from 44 countries. Four transformative days of speakers, field trips, and connection." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #1B3A5C;
+      --navy-dark: #0F2440;
+      --teal: #2E8B8B;
+      --gold: #C5972C;
+      --gold-light: #F5E6C8;
+      --light-bg: #F7F9FB;
+      --white: #FFFFFF;
+      --gray-100: #F5F7FA;
+      --gray-200: #E8ECF1;
+      --gray-400: #9CA3AF;
+      --gray-600: #6B7280;
+      --gray-800: #1F2937;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+    }
 
-  :root {
-    --blue: #1D4ED8;
-    --teal: #0F6E56;
-    --amber: #BA7517;
-    --offwhite: #F5F3ED;
-    --dark: #1A1A18;
-    --mid: #3D3D3A;
-    --muted: #7A7A74;
-    --border: rgba(0,0,0,0.08);
-  }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--dark);
-    color: var(--offwhite);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+    body {
+      font-family: var(--font-body);
+      color: var(--gray-800);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
 
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.25rem 2.5rem;
-    background: rgba(26,26,24,0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.25rem 3rem;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--gray-200);
+    }
+    nav .logo {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 700; color: var(--navy);
+      text-decoration: none;
+    }
+    nav .cta-btn {
+      background: var(--navy); color: var(--white);
+      padding: 0.6rem 1.5rem; border-radius: 6px;
+      text-decoration: none; font-size: 0.875rem; font-weight: 600;
+      transition: background 0.2s;
+    }
+    nav .cta-btn:hover { background: var(--navy-dark); }
 
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-  }
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; padding: 8rem 2rem 4rem;
+      background: linear-gradient(170deg, var(--navy-dark) 0%, var(--navy) 50%, var(--teal) 100%);
+      color: var(--white);
+    }
+    .hero .location {
+      font-size: 0.9rem; letter-spacing: 0.15em; text-transform: uppercase;
+      opacity: 0.7; margin-bottom: 2rem;
+    }
+    .hero h1 {
+      font-family: var(--font-display); font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 700; line-height: 1.1; margin-bottom: 0.5rem;
+    }
+    .hero h1 em { font-style: italic; color: var(--gold-light); }
+    .hero .tagline {
+      font-size: 1.25rem; font-weight: 300; letter-spacing: 0.05em;
+      opacity: 0.85; margin-bottom: 2rem;
+    }
+    .hero .subtitle {
+      max-width: 700px; font-size: 1.05rem; line-height: 1.8;
+      opacity: 0.8; margin-bottom: 3rem;
+    }
+    .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .hero-buttons .btn-primary {
+      background: var(--gold); color: var(--navy-dark);
+      padding: 0.85rem 2.25rem; border-radius: 6px;
+      text-decoration: none; font-weight: 600; font-size: 1rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .hero-buttons .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+    .hero-buttons .btn-secondary {
+      background: transparent; color: var(--white);
+      padding: 0.85rem 2.25rem; border-radius: 6px; border: 1.5px solid rgba(255,255,255,0.4);
+      text-decoration: none; font-weight: 500; font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+    .hero-buttons .btn-secondary:hover { border-color: var(--white); }
 
-  .nav-icon {
-    width: 32px; height: 32px;
-    background: var(--blue);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-  }
+    /* ── STATS BAR ── */
+    .stats {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      background: var(--white); border-bottom: 1px solid var(--gray-200);
+    }
+    .stat {
+      text-align: center; padding: 2.5rem 1rem;
+      border-right: 1px solid var(--gray-200);
+    }
+    .stat:last-child { border-right: none; }
+    .stat .label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 0.5rem; }
+    .stat .value { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--navy); }
 
-  .nav-icon svg { width: 18px; height: 18px; }
+    /* ── SECTION: ABOUT ── */
+    .section { padding: 6rem 2rem; }
+    .section-inner { max-width: 900px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 1rem;
+    }
+    .section h2 {
+      font-family: var(--font-display); font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 700; color: var(--navy); line-height: 1.25; margin-bottom: 1.5rem;
+    }
+    .section h2 em { font-style: italic; color: var(--teal); }
+    .section p { color: var(--gray-600); font-size: 1.05rem; margin-bottom: 1.25rem; }
 
-  .nav-wordmark {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 17px;
-    font-weight: 600;
-    color: var(--offwhite);
-    letter-spacing: 0.01em;
-  }
+    /* ── PILLARS ── */
+    .pillars {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem; margin-top: 3rem;
+    }
+    .pillar {
+      background: var(--gray-100); border-radius: 12px; padding: 2.25rem;
+      border: 1px solid var(--gray-200);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .pillar:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+    .pillar .icon { font-size: 2rem; margin-bottom: 1rem; }
+    .pillar h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--navy); margin-bottom: 0.75rem; }
+    .pillar p { font-size: 0.925rem; color: var(--gray-600); line-height: 1.65; }
 
-  .nav-cta {
-    background: var(--blue);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 0.5rem 1.2rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-    text-decoration: none;
-  }
+    /* ── SCHEDULE SNAPSHOT ── */
+    .schedule { background: var(--light-bg); }
+    .schedule-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem; margin-top: 2.5rem;
+    }
+    .day-card {
+      background: var(--white); border-radius: 12px; padding: 2rem;
+      border: 1px solid var(--gray-200);
+      border-top: 4px solid var(--navy);
+    }
+    .day-card:nth-child(2) { border-top-color: var(--teal); }
+    .day-card:nth-child(3) { border-top-color: var(--gold); }
+    .day-card:nth-child(4) { border-top-color: var(--navy); }
+    .day-card .day-label {
+      font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gray-400); margin-bottom: 0.25rem;
+    }
+    .day-card .day-date {
+      font-family: var(--font-display); font-size: 1.05rem; font-weight: 700;
+      color: var(--navy); margin-bottom: 1.25rem;
+    }
+    .day-card ul { list-style: none; }
+    .day-card li {
+      font-size: 0.875rem; color: var(--gray-600);
+      padding: 0.4rem 0; border-bottom: 1px solid var(--gray-100);
+    }
+    .day-card li:last-child { border-bottom: none; }
+    .day-card li strong { color: var(--gray-800); font-weight: 500; }
 
-  .nav-cta:hover { background: #1a44c0; }
+    /* ── SPEAKERS & EXPERIENCES ── */
+    .experiences-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2.5rem;
+    }
+    .exp-column h3 {
+      font-family: var(--font-display); font-size: 1.35rem; color: var(--navy);
+      margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--gold);
+    }
+    .exp-item { margin-bottom: 1.25rem; }
+    .exp-item .exp-name { font-weight: 600; color: var(--navy); font-size: 0.95rem; }
+    .exp-item .exp-desc { font-size: 0.875rem; color: var(--gray-600); margin-top: 0.2rem; }
 
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 8rem 2rem 4rem;
-    position: relative;
-    overflow: hidden;
-  }
+    /* ── CTA ── */
+    .cta-section {
+      background: linear-gradient(170deg, var(--navy) 0%, var(--navy-dark) 100%);
+      color: var(--white); text-align: center;
+    }
+    .cta-section h2 { color: var(--white); }
+    .cta-section h2 em { color: var(--gold-light); }
+    .cta-section p { color: rgba(255,255,255,0.75); }
+    .cta-section .btn-primary {
+      display: inline-block; margin-top: 2rem;
+      background: var(--gold); color: var(--navy-dark);
+      padding: 1rem 2.75rem; border-radius: 6px;
+      text-decoration: none; font-weight: 600; font-size: 1.1rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-section .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
 
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(29,78,216,0.18) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 30% at 80% 80%, rgba(15,110,86,0.12) 0%, transparent 60%),
-      radial-gradient(ellipse 30% 20% at 20% 60%, rgba(186,117,23,0.08) 0%, transparent 50%);
-  }
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2.5rem 2rem;
+      background: var(--navy-dark); color: rgba(255,255,255,0.5);
+      font-size: 0.8rem; line-height: 1.8;
+    }
+    footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+    footer .disclaimer { margin-top: 0.75rem; font-size: 0.7rem; opacity: 0.6; max-width: 600px; margin-left: auto; margin-right: auto; }
 
-  .hero-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(29,78,216,0.15);
-    border: 1px solid rgba(29,78,216,0.3);
-    border-radius: 20px;
-    padding: 0.35rem 1rem;
-    font-size: 12px;
-    font-weight: 500;
-    color: #93b4f7;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 2rem;
-    position: relative;
-    animation: fadeUp 0.8s ease both;
-  }
-
-  .badge-dot {
-    width: 6px; height: 6px;
-    background: #93b4f7;
-    border-radius: 50%;
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-  }
-
-  .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3.5rem, 8vw, 6.5rem);
-    font-weight: 300;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    color: var(--offwhite);
-    position: relative;
-    animation: fadeUp 0.8s 0.1s ease both;
-    margin-bottom: 0.5rem;
-  }
-
-  .hero-title em {
-    font-style: italic;
-    color: #93b4f7;
-  }
-
-  .hero-tagline {
-    font-size: clamp(0.85rem, 1.5vw, 1rem);
-    font-weight: 300;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--amber);
-    margin-bottom: 1.75rem;
-    position: relative;
-    animation: fadeUp 0.8s 0.2s ease both;
-  }
-
-  .hero-description {
-    max-width: 580px;
-    font-size: 1.05rem;
-    font-weight: 300;
-    line-height: 1.75;
-    color: rgba(245,243,237,0.65);
-    margin-bottom: 2.5rem;
-    position: relative;
-    animation: fadeUp 0.8s 0.3s ease both;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: center;
-    position: relative;
-    animation: fadeUp 0.8s 0.4s ease both;
-  }
-
-  .btn-primary {
-    background: var(--blue);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 0.85rem 2rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-decoration: none;
-    display: inline-block;
-  }
-
-  .btn-primary:hover {
-    background: #1a44c0;
-    transform: translateY(-1px);
-  }
-
-  .btn-ghost {
-    background: transparent;
-    color: var(--offwhite);
-    border: 1px solid rgba(245,243,237,0.2);
-    border-radius: 8px;
-    padding: 0.85rem 2rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 400;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-decoration: none;
-    display: inline-block;
-  }
-
-  .btn-ghost:hover {
-    border-color: rgba(245,243,237,0.4);
-    transform: translateY(-1px);
-  }
-
-  /* EVENT DETAILS STRIP */
-  .details-strip {
-    background: rgba(255,255,255,0.04);
-    border-top: 1px solid rgba(255,255,255,0.07);
-    border-bottom: 1px solid rgba(255,255,255,0.07);
-    padding: 1.5rem 2.5rem;
-    display: flex;
-    justify-content: center;
-    gap: 3rem;
-    flex-wrap: wrap;
-  }
-
-  .detail-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-  }
-
-  .detail-label {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .detail-value {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: var(--offwhite);
-  }
-
-  /* SECTIONS */
-  section {
-    padding: 6rem 2rem;
-    max-width: 960px;
-    margin: 0 auto;
-  }
-
-  .section-label {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--amber);
-    margin-bottom: 1rem;
-  }
-
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 300;
-    line-height: 1.15;
-    color: var(--offwhite);
-    margin-bottom: 1.5rem;
-  }
-
-  .section-title em { font-style: italic; color: #93b4f7; }
-
-  .section-body {
-    font-size: 1.05rem;
-    font-weight: 300;
-    line-height: 1.8;
-    color: rgba(245,243,237,0.65);
-    max-width: 640px;
-  }
-
-  /* PILLARS */
-  .pillars {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.25rem;
-    margin-top: 3rem;
-  }
-
-  .pillar-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    padding: 1.75rem;
-    transition: border-color 0.2s, background 0.2s;
-  }
-
-  .pillar-card:hover {
-    border-color: rgba(29,78,216,0.4);
-    background: rgba(29,78,216,0.06);
-  }
-
-  .pillar-icon {
-    width: 40px; height: 40px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 1rem;
-    font-size: 18px;
-  }
-
-  .pillar-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--offwhite);
-    margin-bottom: 0.5rem;
-  }
-
-  .pillar-body {
-    font-size: 0.9rem;
-    font-weight: 300;
-    line-height: 1.7;
-    color: rgba(245,243,237,0.55);
-  }
-
-  /* RSVP */
-  .rsvp-section {
-    background: rgba(29,78,216,0.08);
-    border: 1px solid rgba(29,78,216,0.2);
-    border-radius: 16px;
-    padding: 3.5rem;
-    text-align: center;
-    margin: 0 2rem 6rem;
-    max-width: 960px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 6rem;
-  }
-
-  .rsvp-form {
-    display: flex;
-    gap: 0.75rem;
-    max-width: 440px;
-    margin: 2rem auto 0;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .rsvp-input {
-    flex: 1;
-    min-width: 220px;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 8px;
-    padding: 0.8rem 1.1rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    color: var(--offwhite);
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .rsvp-input::placeholder { color: rgba(245,243,237,0.3); }
-  .rsvp-input:focus { border-color: rgba(29,78,216,0.5); }
-
-  /* FOOTER */
-  footer {
-    border-top: 1px solid rgba(255,255,255,0.07);
-    padding: 2rem 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .footer-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 15px;
-    font-weight: 600;
-    color: rgba(245,243,237,0.4);
-  }
-
-  .footer-domain {
-    font-size: 12px;
-    color: rgba(245,243,237,0.25);
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-</style>
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .stat { padding: 1.5rem 1rem; }
+      .stat:nth-child(2) { border-right: none; }
+      .experiences-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .section { padding: 4rem 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      .stats { grid-template-columns: 1fr; }
+      .stat { border-right: none; border-bottom: 1px solid var(--gray-200); }
+      .stat:last-child { border-bottom: none; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">
-    <div class="nav-icon">
-      <svg viewBox="0 0 18 18" fill="none">
-        <circle cx="9" cy="9" r="3" fill="white" opacity="0.9"/>
-        <circle cx="9" cy="9" r="6" stroke="white" stroke-width="1" opacity="0.5"/>
-        <circle cx="9" cy="9" r="8.5" stroke="white" stroke-width="0.75" opacity="0.25"/>
-      </svg>
+  <!-- ═══ NAV ═══ -->
+  <nav>
+    <a href="#" class="logo">Immersion Week</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSddcmOTiGoqN4knL_17jGHDDHbPLQp7CwuKqQgE3wsud7d0kQ/viewform" class="cta-btn">Register Now</a>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <p class="location">Houston, Texas &middot; October 21&ndash;24, 2026</p>
+    <h1><em>Immersion</em> Week</h1>
+    <p class="tagline">Go Deeper. Go Further. Go Live.</p>
+    <p class="subtitle">
+      Four transformative days. 144 leaders from 44 countries.<br />
+      An experience designed to deepen bonds, sharpen thinking, and forge lifelong
+      relationships &mdash; with exclusive access to NASA, AI data centers, and world-class speakers.
+    </p>
+    <div class="hero-buttons">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSddcmOTiGoqN4knL_17jGHDDHbPLQp7CwuKqQgE3wsud7d0kQ/viewform" class="btn-primary">Register Now</a>
+      <a href="#about" class="btn-secondary">Learn More</a>
     </div>
-    <span class="nav-wordmark">Immersion Week</span>
-  </a>
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLSddcmOTiGoqN4knL_17jGHDDHbPLQp7CwuKqQgE3wsud7d0kQ/viewform" target="_blank" class="nav-cta">Reserve My Spot</a>
-</nav>
+  </section>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-
-  <div class="hero-badge">
-    <div class="badge-dot"></div>
-    Houston, Texas · 2026
-  </div>
-
-  <h1 class="hero-title">
-    <em>Immersion</em> Week
-  </h1>
-
-  <p class="hero-tagline">Go Deeper. Go Further. Go Live.</p>
-
-  <p class="hero-description">
-    One transformative week. 144 extraordinary leaders from around the world.
-    A once-in-a-lifetime experience designed to deepen bonds, sharpen thinking,
-    and forge lifelong relationships that go far beyond the classroom.
-  </p>
-
-  <div class="hero-actions">
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSddcmOTiGoqN4knL_17jGHDDHbPLQp7CwuKqQgE3wsud7d0kQ/viewform" target="_blank" class="btn-primary">Reserve My Spot</a>
-    <a href="#about" class="btn-ghost">Learn More</a>
-  </div>
-</div>
-
-<!-- DETAILS STRIP -->
-<div class="details-strip">
-  <div class="detail-item">
-    <span class="detail-label">When</span>
-    <span class="detail-value">Fall 2026 · Dates TBC</span>
-  </div>
-  <div class="detail-item">
-    <span class="detail-label">Where</span>
-    <span class="detail-value">Houston, Texas</span>
-  </div>
-  <div class="detail-item">
-    <span class="detail-label">Who</span>
-    <span class="detail-value">Our Cohort · 144 Leaders</span>
-  </div>
-  <div class="detail-item">
-    <span class="detail-label">Duration</span>
-    <span class="detail-value">One Full Week</span>
-  </div>
-</div>
-
-<!-- ABOUT -->
-<section id="about">
-  <p class="section-label">What is Immersion Week</p>
-  <h2 class="section-title">More than an event.<br><em>A turning point.</em></h2>
-  <p class="section-body">
-    Immersion Week is a deliberately designed experience for our global cohort —
-    a week to step out of the day-to-day and step fully into one another.
-    Through shared challenges, candid conversations, strategic sessions,
-    and unforgettable moments, we go deeper into who we are as leaders,
-    further into what we can build together, and fully alive to the possibilities
-    that emerge when brilliant people commit to one another for life.
-  </p>
-
-  <div class="pillars">
-    <div class="pillar-card">
-      <div class="pillar-icon" style="background:rgba(29,78,216,0.15);">🧭</div>
-      <div class="pillar-title">Leadership & Self</div>
-      <div class="pillar-body">Go deeper into your own leadership identity. Understand how you show up, how you lead under pressure, and how to unlock your full potential.</div>
+  <!-- ═══ STATS BAR ═══ -->
+  <div class="stats">
+    <div class="stat">
+      <div class="label">When</div>
+      <div class="value">October 21&ndash;24, 2026</div>
     </div>
-    <div class="pillar-card">
-      <div class="pillar-icon" style="background:rgba(15,110,86,0.15);">🤝</div>
-      <div class="pillar-title">Cohort Bonds</div>
-      <div class="pillar-body">144 peers from across the globe — each with a story, a skill, and a perspective. Immersion Week is where professional connections become lifelong friendships.</div>
+    <div class="stat">
+      <div class="label">Where</div>
+      <div class="value">Houston, Texas</div>
     </div>
-    <div class="pillar-card">
-      <div class="pillar-icon" style="background:rgba(186,117,23,0.15);">💡</div>
-      <div class="pillar-title">Strategy & Innovation</div>
-      <div class="pillar-body">Tackle real-world business challenges together. Share frameworks, debate ideas, and leave with sharper strategic thinking and new tools for your career.</div>
+    <div class="stat">
+      <div class="label">Who</div>
+      <div class="value">Our Cohort &middot; 144 Leaders &middot; 44 Countries</div>
     </div>
-    <div class="pillar-card">
-      <div class="pillar-icon" style="background:rgba(29,78,216,0.12);">🌍</div>
-      <div class="pillar-title">Global Perspective</div>
-      <div class="pillar-body">Our cohort spans continents, industries, and cultures. Immersion Week harnesses that diversity deliberately — because the best ideas emerge at the intersection.</div>
+    <div class="stat">
+      <div class="label">Duration</div>
+      <div class="value">4 Days</div>
     </div>
   </div>
-</section>
 
-<!-- RSVP -->
-<div class="rsvp-section" id="rsvp">
-  <p class="section-label">Save Your Place</p>
-  <h2 class="section-title" style="font-size:2.2rem;">Ready to go <em>all in?</em></h2>
-  <p class="section-body" style="margin: 0 auto; font-size:0.95rem;">
-    Confirm your interest now and be first to receive full details,
-    the agenda, and logistics as they are finalized.
-  </p>
-  <div class="rsvp-form">
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSddcmOTiGoqN4knL_17jGHDDHbPLQp7CwuKqQgE3wsud7d0kQ/viewform" target="_blank" class="btn-primary" style="white-space:nowrap;">Count Me In</a>
-  </div>
-</div>
+  <!-- ═══ ABOUT ═══ -->
+  <section class="section" id="about">
+    <div class="section-inner">
+      <p class="section-label">What is Immersion Week</p>
+      <h2>More than an event. <em>A turning point.</em></h2>
+      <p>
+        Immersion Week is a deliberately designed experience for our global cohort &mdash;
+        four days to step out of the day-to-day and step fully into one another.
+        Through field experiences at NASA and Houston&rsquo;s AI infrastructure,
+        candid conversations with leaders from NVIDIA, HPE, and the energy sector,
+        and unstructured time built for real connection &mdash; we go deeper into who
+        we are as leaders and further into what we can build together.
+      </p>
+      <p>
+        This is our second time gathering as a cohort, and we won&rsquo;t reconvene
+        again until March 2027. The relationships we form in Houston will carry us through.
+      </p>
 
-<!-- FOOTER -->
-<footer>
-  <span class="footer-logo">Immersion Week · 2026</span>
-  <span class="footer-domain">goimmersionlive.com</span>
-</footer>
+      <!-- Pillars -->
+      <div class="pillars">
+        <div class="pillar">
+          <div class="icon">&#x1F9ED;</div>
+          <h3>Leadership &amp; Self</h3>
+          <p>Go deeper into your own leadership identity through peer forums and moderated sessions where leaders share real turning points, failures, and breakthroughs.</p>
+        </div>
+        <div class="pillar">
+          <div class="icon">&#x1F91D;</div>
+          <h3>Cohort Bonds</h3>
+          <p>144 peers from 44 countries. Rotated seating at every meal. Small-group breakouts of 8&ndash;10. Free evenings to explore Houston together. This is where professional connections become lifelong friendships.</p>
+        </div>
+        <div class="pillar">
+          <div class="icon">&#x1F4A1;</div>
+          <h3>Strategy &amp; Innovation</h3>
+          <p>Walk through an AI data center. Stand inside NASA Mission Control. Hear from NVIDIA, HPE, and renewable energy leaders. Then sit down with your peers and ask: what does this mean for my organization?</p>
+        </div>
+        <div class="pillar">
+          <div class="icon">&#x1F30D;</div>
+          <h3>Global Perspective</h3>
+          <p>Our cohort spans continents, industries, and cultures. Immersion Week harnesses that diversity deliberately &mdash; with accountability partner matching and impact project working sessions designed to outlast the week itself.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SCHEDULE SNAPSHOT ═══ -->
+  <section class="section schedule" id="schedule">
+    <div class="section-inner">
+      <p class="section-label">The Agenda</p>
+      <h2>Four days. <em>No filler.</em></h2>
+      <p>
+        Every session is designed around one principle: less is more. One to two speakers a day.
+        Field trips you can&rsquo;t get on your own. And hours of unstructured time &mdash;
+        because the best conversations don&rsquo;t happen on a schedule.
+      </p>
+
+      <div class="schedule-grid">
+        <div class="day-card">
+          <div class="day-label">Day 1</div>
+          <div class="day-date">Wednesday, Oct 21</div>
+          <ul>
+            <li><strong>Arrival &amp; Check-In</strong></li>
+            <li><strong>Welcome Reception</strong></li>
+            <li><strong>NVIDIA Keynote</strong></li>
+            <li><strong>Opening Dinner</strong></li>
+          </ul>
+        </div>
+        <div class="day-card">
+          <div class="day-label">Day 2</div>
+          <div class="day-date">Thursday, Oct 22</div>
+          <ul>
+            <li><strong>AI Data Center Tour</strong></li>
+            <li><strong>HPE Speaker</strong></li>
+            <li><strong>Peer Breakout Sessions</strong></li>
+            <li><strong>Free Evening</strong></li>
+          </ul>
+        </div>
+        <div class="day-card">
+          <div class="day-label">Day 3</div>
+          <div class="day-date">Friday, Oct 23</div>
+          <ul>
+            <li><strong>NASA Johnson Space Center</strong></li>
+            <li><strong>Energy &amp; AI Speaker</strong></li>
+            <li><strong>Leadership Forum</strong></li>
+            <li><strong>Optional: Texas Vineyard</strong></li>
+            <li><strong>Gala Dinner</strong></li>
+          </ul>
+        </div>
+        <div class="day-card">
+          <div class="day-label">Day 4</div>
+          <div class="day-date">Saturday, Oct 24</div>
+          <ul>
+            <li><strong>HPE Speaker</strong></li>
+            <li><strong>Impact Project Workshop</strong></li>
+            <li><strong>Closing Session</strong></li>
+            <li><strong>Farewell Lunch</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SPEAKERS & EXPERIENCES ═══ -->
+  <section class="section" id="speakers">
+    <div class="section-inner">
+      <p class="section-label">What Awaits</p>
+      <h2>Who you&rsquo;ll hear from. <em>What you&rsquo;ll see.</em></h2>
+
+      <div class="experiences-grid">
+        <div class="exp-column">
+          <h3>Speakers</h3>
+          <div class="exp-item">
+            <div class="exp-name">NVIDIA</div>
+            <div class="exp-desc">The AI revolution from the hardware layer up</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-name">HPE &mdash; AI in Networks</div>
+            <div class="exp-desc">Agentic AI in enterprise networking through Juniper and Aruba platforms</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-name">HPE &mdash; Infrastructure</div>
+            <div class="exp-desc">Morpheus, PCAI, and simplifying AI workloads for enterprise</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-name">Renewable Energy Leaders</div>
+            <div class="exp-desc">How AI is transforming energy infrastructure and sustainability at scale</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-name">MIT Faculty <span style="opacity:0.5">(invited)</span></div>
+            <div class="exp-desc">Virtual keynote on AI governance and technology leadership</div>
+          </div>
+        </div>
+        <div class="exp-column">
+          <h3>Field Experiences</h3>
+          <div class="exp-item">
+            <div class="exp-name">AI Data Center Tour</div>
+            <div class="exp-desc">Walk through a live AI and high-performance computing facility &mdash; GPU clusters, agentic AI, and enterprise infrastructure in operation</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-name">NASA Johnson Space Center</div>
+            <div class="exp-desc">Behind-the-scenes access to Mission Control, astronaut training, and innovation labs</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-name">Texas Vineyard Excursion</div>
+            <div class="exp-desc">Optional afternoon outing for those who want a relaxed social experience (Day 3)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA ═══ -->
+  <section class="section cta-section" id="register">
+    <div class="section-inner" style="max-width: 650px;">
+      <p class="section-label" style="color: var(--gold-light);">Save Your Place</p>
+      <h2>Spots are filling.</h2>
+      <p>
+        Registrations are open and our cohort is responding.<br />
+        Secure your place now &mdash; dates, speakers, and field trips are confirmed.
+      </p>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSddcmOTiGoqN4knL_17jGHDDHbPLQp7CwuKqQgE3wsud7d0kQ/viewform" class="btn-primary">Register Now</a>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div>Immersion Week &middot; October 21&ndash;24, 2026 &middot; Houston, TX</div>
+    <div><a href="https://goimmersionlive.com">goimmersionlive.com</a></div>
+    <div class="disclaimer">
+      This is an independently organized event by participants of the MIT Professional Education
+      CXO Program. It is not affiliated with, endorsed by, or sponsored by MIT.
+    </div>
+  </footer>
 
 </body>
 </html>
