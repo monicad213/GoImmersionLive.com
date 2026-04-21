@@ -27,9 +27,7 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
-
     body {
       font-family: var(--font-body);
       color: var(--gray-800);
@@ -51,6 +49,7 @@
       font-size: 1.15rem; font-weight: 700; color: var(--navy);
       text-decoration: none;
     }
+    nav .nav-right { display: flex; align-items: center; gap: 1rem; }
     nav .cta-btn {
       background: var(--navy); color: var(--white);
       padding: 0.6rem 1.5rem; border-radius: 6px;
@@ -58,6 +57,22 @@
       transition: background 0.2s;
     }
     nav .cta-btn:hover { background: var(--navy-dark); }
+
+    /* ── LANGUAGE TOGGLE ── */
+    .lang-toggle {
+      display: flex; border: 1.5px solid var(--gray-200); border-radius: 6px; overflow: hidden;
+    }
+    .lang-toggle button {
+      padding: 0.4rem 0.75rem; font-size: 0.8rem; font-weight: 600;
+      font-family: var(--font-body);
+      border: none; cursor: pointer;
+      background: var(--white); color: var(--gray-400);
+      transition: all 0.2s;
+    }
+    .lang-toggle button.active {
+      background: var(--navy); color: var(--white);
+    }
+    .lang-toggle button:first-child { border-right: 1px solid var(--gray-200); }
 
     /* ── HERO ── */
     .hero {
@@ -113,106 +128,60 @@
     .stat .label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 0.5rem; }
     .stat .value { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--navy); }
 
-    /* ── SECTION: ABOUT ── */
+    /* ── SECTIONS ── */
     .section { padding: 6rem 2rem; }
     .section-inner { max-width: 900px; margin: 0 auto; }
-    .section-label {
-      font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--teal); margin-bottom: 1rem;
-    }
-    .section h2 {
-      font-family: var(--font-display); font-size: clamp(2rem, 4vw, 2.75rem);
-      font-weight: 700; color: var(--navy); line-height: 1.25; margin-bottom: 1.5rem;
-    }
+    .section-label { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-bottom: 1rem; }
+    .section h2 { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 700; color: var(--navy); line-height: 1.25; margin-bottom: 1.5rem; }
     .section h2 em { font-style: italic; color: var(--teal); }
     .section p { color: var(--gray-600); font-size: 1.05rem; margin-bottom: 1.25rem; }
 
     /* ── PILLARS ── */
-    .pillars {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 2rem; margin-top: 3rem;
-    }
-    .pillar {
-      background: var(--gray-100); border-radius: 12px; padding: 2.25rem;
-      border: 1px solid var(--gray-200);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
+    .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; margin-top: 3rem; }
+    .pillar { background: var(--gray-100); border-radius: 12px; padding: 2.25rem; border: 1px solid var(--gray-200); transition: transform 0.2s, box-shadow 0.2s; }
     .pillar:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
     .pillar .icon { font-size: 2rem; margin-bottom: 1rem; }
     .pillar h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--navy); margin-bottom: 0.75rem; }
     .pillar p { font-size: 0.925rem; color: var(--gray-600); line-height: 1.65; }
 
-    /* ── SCHEDULE SNAPSHOT ── */
+    /* ── SCHEDULE ── */
     .schedule { background: var(--light-bg); }
-    .schedule-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem; margin-top: 2.5rem;
-    }
-    .day-card {
-      background: var(--white); border-radius: 12px; padding: 2rem;
-      border: 1px solid var(--gray-200);
-      border-top: 4px solid var(--navy);
-    }
+    .schedule-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    .day-card { background: var(--white); border-radius: 12px; padding: 2rem; border: 1px solid var(--gray-200); border-top: 4px solid var(--navy); }
     .day-card:nth-child(2) { border-top-color: var(--teal); }
     .day-card:nth-child(3) { border-top-color: var(--gold); }
     .day-card:nth-child(4) { border-top-color: var(--navy); }
-    .day-card .day-label {
-      font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--gray-400); margin-bottom: 0.25rem;
-    }
-    .day-card .day-date {
-      font-family: var(--font-display); font-size: 1.05rem; font-weight: 700;
-      color: var(--navy); margin-bottom: 1.25rem;
-    }
+    .day-card .day-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 0.25rem; }
+    .day-card .day-date { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 1.25rem; }
     .day-card ul { list-style: none; }
-    .day-card li {
-      font-size: 0.875rem; color: var(--gray-600);
-      padding: 0.4rem 0; border-bottom: 1px solid var(--gray-100);
-    }
+    .day-card li { font-size: 0.875rem; color: var(--gray-600); padding: 0.4rem 0; border-bottom: 1px solid var(--gray-100); }
     .day-card li:last-child { border-bottom: none; }
     .day-card li strong { color: var(--gray-800); font-weight: 500; }
 
-    /* ── SPEAKERS & EXPERIENCES ── */
-    .experiences-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2.5rem;
-    }
-    .exp-column h3 {
-      font-family: var(--font-display); font-size: 1.35rem; color: var(--navy);
-      margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--gold);
-    }
+    /* ── SPEAKERS ── */
+    .experiences-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2.5rem; }
+    .exp-column h3 { font-family: var(--font-display); font-size: 1.35rem; color: var(--navy); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--gold); }
     .exp-item { margin-bottom: 1.25rem; }
     .exp-item .exp-name { font-weight: 600; color: var(--navy); font-size: 0.95rem; }
     .exp-item .exp-desc { font-size: 0.875rem; color: var(--gray-600); margin-top: 0.2rem; }
 
     /* ── CTA ── */
-    .cta-section {
-      background: linear-gradient(170deg, var(--navy) 0%, var(--navy-dark) 100%);
-      color: var(--white); text-align: center;
-    }
+    .cta-section { background: linear-gradient(170deg, var(--navy) 0%, var(--navy-dark) 100%); color: var(--white); text-align: center; }
     .cta-section h2 { color: var(--white); }
     .cta-section h2 em { color: var(--gold-light); }
     .cta-section p { color: rgba(255,255,255,0.75); }
-    .cta-section .btn-primary {
-      display: inline-block; margin-top: 2rem;
-      background: var(--gold); color: var(--navy-dark);
-      padding: 1rem 2.75rem; border-radius: 6px;
-      text-decoration: none; font-weight: 600; font-size: 1.1rem;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
+    .cta-section .btn-primary { display: inline-block; margin-top: 2rem; background: var(--gold); color: var(--navy-dark); padding: 1rem 2.75rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: transform 0.2s, box-shadow 0.2s; }
     .cta-section .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
 
     /* ── FOOTER ── */
-    footer {
-      text-align: center; padding: 2.5rem 2rem;
-      background: var(--navy-dark); color: rgba(255,255,255,0.5);
-      font-size: 0.8rem; line-height: 1.8;
-    }
+    footer { text-align: center; padding: 2.5rem 2rem; background: var(--navy-dark); color: rgba(255,255,255,0.5); font-size: 0.8rem; line-height: 1.8; }
     footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
     footer .disclaimer { margin-top: 0.75rem; font-size: 0.7rem; opacity: 0.6; max-width: 600px; margin-left: auto; margin-right: auto; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
+      nav .nav-right { gap: 0.5rem; }
       .stats { grid-template-columns: repeat(2, 1fr); }
       .stat { padding: 1.5rem 1rem; }
       .stat:nth-child(2) { border-right: none; }
@@ -223,6 +192,7 @@
       .stats { grid-template-columns: 1fr; }
       .stat { border-right: none; border-bottom: 1px solid var(--gray-200); }
       .stat:last-child { border-bottom: none; }
+      .lang-toggle button { padding: 0.35rem 0.6rem; font-size: 0.75rem; }
     }
   </style>
 </head>
@@ -231,144 +201,128 @@
   <!-- ═══ NAV ═══ -->
   <nav>
     <a href="#" class="logo">Immersion Live</a>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSddcmOTiGoqN4knL_17jGHDDHbPLQp7CwuKqQgE3wsud7d0kQ/viewform" class="cta-btn">Register Now</a>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button class="active" onclick="setLang('en')">EN</button>
+        <button onclick="setLang('es')">ES</button>
+      </div>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSddcmOTiGoqN4knL_17jGHDDHbPLQp7CwuKqQgE3wsud7d0kQ/viewform" class="cta-btn" data-i18n="nav_cta">Register Now</a>
+    </div>
   </nav>
 
   <!-- ═══ HERO ═══ -->
   <section class="hero">
     <p class="location">Houston, Texas &middot; October 21&ndash;24, 2026</p>
     <h1><em>Immersion</em> Live</h1>
-    <p class="tagline">Go Deeper. Go Further. Go Live.</p>
-    <p class="subtitle">
-      Four days of curated speakers, field trips, and real connection &mdash;
-      with 144 leaders from 44 countries.<br />
-      Arrive early or stay longer to make the most of Houston.
-      The structured program runs October 21&ndash;24.
-    </p>
+    <p class="tagline" data-i18n="hero_tagline">Go Deeper. Go Further. Go Live.</p>
+    <p class="subtitle" data-i18n-html="hero_subtitle">Four days of curated speakers, field trips, and real connection &mdash; with 144 leaders from 44 countries.<br />Arrive early or stay longer to make the most of Houston. The structured program runs October 21&ndash;24.</p>
     <div class="hero-buttons">
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSddcmOTiGoqN4knL_17jGHDDHbPLQp7CwuKqQgE3wsud7d0kQ/viewform" class="btn-primary">Register Now</a>
-      <a href="#about" class="btn-secondary">Learn More</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSddcmOTiGoqN4knL_17jGHDDHbPLQp7CwuKqQgE3wsud7d0kQ/viewform" class="btn-primary" data-i18n="hero_cta">Register Now</a>
+      <a href="#about" class="btn-secondary" data-i18n="hero_learn">Learn More</a>
     </div>
   </section>
 
   <!-- ═══ STATS BAR ═══ -->
   <div class="stats">
     <div class="stat">
-      <div class="label">When</div>
+      <div class="label" data-i18n="stat1_label">When</div>
       <div class="value">October 21&ndash;24, 2026</div>
     </div>
     <div class="stat">
-      <div class="label">Where</div>
+      <div class="label" data-i18n="stat2_label">Where</div>
       <div class="value">Houston, Texas</div>
     </div>
     <div class="stat">
-      <div class="label">Who</div>
-      <div class="value">Our Cohort &middot; 144 Leaders &middot; 44 Countries</div>
+      <div class="label" data-i18n="stat3_label">Who</div>
+      <div class="value" data-i18n="stat3_value">Our Cohort &middot; 144 Leaders &middot; 44 Countries</div>
     </div>
     <div class="stat">
-      <div class="label">Program</div>
-      <div class="value">4 Days &middot; Extend Your Stay</div>
+      <div class="label" data-i18n="stat4_label">Program</div>
+      <div class="value" data-i18n="stat4_value">4 Days &middot; Extend Your Stay</div>
     </div>
   </div>
 
   <!-- ═══ ABOUT ═══ -->
   <section class="section" id="about">
     <div class="section-inner">
-      <p class="section-label">What is Immersion Live</p>
-      <h2>More than an event. <em>A turning point.</em></h2>
-      <p>
-        Immersion Live is a deliberately designed experience for our global cohort &mdash;
-        four days of structured programming built around field experiences at NASA and
-        Houston&rsquo;s AI infrastructure, candid conversations with leaders from NVIDIA,
-        HPE, and the energy sector, and unstructured time for real connection.
-        We go deeper into who we are as leaders and further into what we can build together.
-      </p>
-      <p>
-        The program runs October 21&ndash;24. Many participants choose to arrive a day early
-        or stay through the weekend to continue the conversation on their own terms.
-      </p>
-      <p>
-        This is our second time gathering as a cohort, and we won&rsquo;t reconvene
-        again until March 2027. The relationships we form in Houston will carry us through.
-      </p>
+      <p class="section-label" data-i18n="about_label">What is Immersion Live</p>
+      <h2 data-i18n-html="about_heading">More than an event. <em>A turning point.</em></h2>
+      <p data-i18n="about_p1">Immersion Live is a deliberately designed experience for our global cohort &mdash; four days of structured programming built around field experiences at NASA and Houston&rsquo;s AI infrastructure, candid conversations with leaders from NVIDIA, HPE, and the energy sector, and unstructured time for real connection. We go deeper into who we are as leaders and further into what we can build together.</p>
+      <p data-i18n="about_p2">The program runs October 21&ndash;24. Many participants choose to arrive a day early or stay through the weekend to continue the conversation on their own terms.</p>
+      <p data-i18n="about_p3">This is our second time gathering as a cohort, and we won&rsquo;t reconvene again until March 2027. The relationships we form in Houston will carry us through.</p>
 
-      <!-- Pillars -->
       <div class="pillars">
         <div class="pillar">
           <div class="icon">&#x1F9ED;</div>
-          <h3>Leadership &amp; Self</h3>
-          <p>Go deeper into your own leadership identity through peer forums and moderated sessions where leaders share real turning points, failures, and breakthroughs.</p>
+          <h3 data-i18n="pillar1_title">Leadership &amp; Self</h3>
+          <p data-i18n="pillar1_desc">Go deeper into your own leadership identity through peer forums and moderated sessions where leaders share real turning points, failures, and breakthroughs.</p>
         </div>
         <div class="pillar">
           <div class="icon">&#x1F91D;</div>
-          <h3>Cohort Bonds</h3>
-          <p>144 peers from 44 countries. Rotated seating at every meal. Small-group breakouts of 8&ndash;10. Free evenings to explore Houston together. This is where professional connections become lifelong friendships.</p>
+          <h3 data-i18n="pillar2_title">Cohort Bonds</h3>
+          <p data-i18n="pillar2_desc">144 peers from 44 countries. Rotated seating at every meal. Small-group breakouts of 8&ndash;10. Free evenings to explore Houston together. This is where professional connections become lifelong friendships.</p>
         </div>
         <div class="pillar">
           <div class="icon">&#x1F4A1;</div>
-          <h3>Strategy &amp; Innovation</h3>
-          <p>Walk through an AI data center. Stand inside NASA Mission Control. Hear from NVIDIA, HPE, and renewable energy leaders. Then sit down with your peers and ask: what does this mean for my organization?</p>
+          <h3 data-i18n="pillar3_title">Strategy &amp; Innovation</h3>
+          <p data-i18n="pillar3_desc">Walk through an AI data center. Stand inside NASA Mission Control. Hear from NVIDIA, HPE, and renewable energy leaders. Then sit down with your peers and ask: what does this mean for my organization?</p>
         </div>
         <div class="pillar">
           <div class="icon">&#x1F30D;</div>
-          <h3>Global Perspective</h3>
-          <p>Our cohort spans continents, industries, and cultures. Immersion Live harnesses that diversity deliberately &mdash; with accountability partner matching and impact project working sessions designed to outlast the event itself.</p>
+          <h3 data-i18n="pillar4_title">Global Perspective</h3>
+          <p data-i18n="pillar4_desc">Our cohort spans continents, industries, and cultures. Immersion Live harnesses that diversity deliberately &mdash; with accountability partner matching and impact project working sessions designed to outlast the event itself.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ SCHEDULE SNAPSHOT ═══ -->
+  <!-- ═══ SCHEDULE ═══ -->
   <section class="section schedule" id="schedule">
     <div class="section-inner">
-      <p class="section-label">The Agenda</p>
-      <h2>Four days. <em>No filler.</em></h2>
-      <p>
-        Every session is designed around one principle: less is more. One to two speakers a day.
-        Field trips you can&rsquo;t get on your own. And hours of unstructured time &mdash;
-        because the best conversations don&rsquo;t happen on a schedule.
-      </p>
+      <p class="section-label" data-i18n="sched_label">The Agenda</p>
+      <h2 data-i18n-html="sched_heading">Four days. <em>No filler.</em></h2>
+      <p data-i18n="sched_desc">Every session is designed around one principle: less is more. One to two speakers a day. Field trips you can&rsquo;t get on your own. And hours of unstructured time &mdash; because the best conversations don&rsquo;t happen on a schedule.</p>
 
       <div class="schedule-grid">
         <div class="day-card">
-          <div class="day-label">Day 1</div>
-          <div class="day-date">Wednesday, Oct 21</div>
+          <div class="day-label" data-i18n="day1_label">Day 1</div>
+          <div class="day-date" data-i18n="day1_date">Wednesday, Oct 21</div>
           <ul>
-            <li><strong>Arrival &amp; Check-In</strong></li>
-            <li><strong>Welcome Reception</strong></li>
-            <li><strong>NVIDIA Keynote</strong></li>
-            <li><strong>Opening Dinner</strong></li>
+            <li><strong data-i18n="day1_1">Arrival &amp; Check-In</strong></li>
+            <li><strong data-i18n="day1_2">Welcome Reception</strong></li>
+            <li><strong data-i18n="day1_3">NVIDIA Keynote</strong></li>
+            <li><strong data-i18n="day1_4">Opening Dinner</strong></li>
           </ul>
         </div>
         <div class="day-card">
-          <div class="day-label">Day 2</div>
-          <div class="day-date">Thursday, Oct 22</div>
+          <div class="day-label" data-i18n="day2_label">Day 2</div>
+          <div class="day-date" data-i18n="day2_date">Thursday, Oct 22</div>
           <ul>
-            <li><strong>AI Data Center Tour</strong></li>
-            <li><strong>HPE Speaker</strong></li>
-            <li><strong>Peer Breakout Sessions</strong></li>
-            <li><strong>Free Evening</strong></li>
+            <li><strong data-i18n="day2_1">AI Data Center Tour</strong></li>
+            <li><strong data-i18n="day2_2">HPE Speaker</strong></li>
+            <li><strong data-i18n="day2_3">Peer Breakout Sessions</strong></li>
+            <li><strong data-i18n="day2_4">Free Evening</strong></li>
           </ul>
         </div>
         <div class="day-card">
-          <div class="day-label">Day 3</div>
-          <div class="day-date">Friday, Oct 23</div>
+          <div class="day-label" data-i18n="day3_label">Day 3</div>
+          <div class="day-date" data-i18n="day3_date">Friday, Oct 23</div>
           <ul>
-            <li><strong>NASA Johnson Space Center</strong></li>
-            <li><strong>Energy &amp; AI Speaker</strong></li>
-            <li><strong>Leadership Forum</strong></li>
-            <li><strong>Optional: Texas Vineyard</strong></li>
-            <li><strong>Gala Dinner</strong></li>
+            <li><strong data-i18n="day3_1">NASA Johnson Space Center</strong></li>
+            <li><strong data-i18n="day3_2">Energy &amp; AI Speaker</strong></li>
+            <li><strong data-i18n="day3_3">Leadership Forum</strong></li>
+            <li><strong data-i18n="day3_4">Optional: Texas Vineyard</strong></li>
+            <li><strong data-i18n="day3_5">Gala Dinner</strong></li>
           </ul>
         </div>
         <div class="day-card">
-          <div class="day-label">Day 4</div>
-          <div class="day-date">Saturday, Oct 24</div>
+          <div class="day-label" data-i18n="day4_label">Day 4</div>
+          <div class="day-date" data-i18n="day4_date">Saturday, Oct 24</div>
           <ul>
-            <li><strong>HPE Speaker</strong></li>
-            <li><strong>Impact Project Workshop</strong></li>
-            <li><strong>Closing Session</strong></li>
-            <li><strong>Farewell Lunch</strong></li>
+            <li><strong data-i18n="day4_1">HPE Speaker</strong></li>
+            <li><strong data-i18n="day4_2">Impact Project Workshop</strong></li>
+            <li><strong data-i18n="day4_3">Closing Session</strong></li>
+            <li><strong data-i18n="day4_4">Farewell Lunch</strong></li>
           </ul>
         </div>
       </div>
@@ -378,46 +332,46 @@
   <!-- ═══ SPEAKERS & EXPERIENCES ═══ -->
   <section class="section" id="speakers">
     <div class="section-inner">
-      <p class="section-label">What Awaits</p>
-      <h2>Who you&rsquo;ll hear from. <em>What you&rsquo;ll see.</em></h2>
+      <p class="section-label" data-i18n="exp_label">What Awaits</p>
+      <h2 data-i18n-html="exp_heading">Who you&rsquo;ll hear from. <em>What you&rsquo;ll see.</em></h2>
 
       <div class="experiences-grid">
         <div class="exp-column">
-          <h3>Speakers</h3>
+          <h3 data-i18n="speakers_title">Speakers</h3>
           <div class="exp-item">
             <div class="exp-name">NVIDIA</div>
-            <div class="exp-desc">The AI revolution from the hardware layer up</div>
+            <div class="exp-desc" data-i18n="spk1">The AI revolution from the hardware layer up</div>
           </div>
           <div class="exp-item">
             <div class="exp-name">HPE &mdash; AI in Networks</div>
-            <div class="exp-desc">Agentic AI in enterprise networking through Juniper and Aruba platforms</div>
+            <div class="exp-desc" data-i18n="spk2">Agentic AI in enterprise networking through Juniper and Aruba platforms</div>
           </div>
           <div class="exp-item">
             <div class="exp-name">HPE &mdash; Infrastructure</div>
-            <div class="exp-desc">Morpheus, PCAI, and simplifying AI workloads for enterprise</div>
+            <div class="exp-desc" data-i18n="spk3">Morpheus, PCAI, and simplifying AI workloads for enterprise</div>
           </div>
           <div class="exp-item">
-            <div class="exp-name">Renewable Energy Leaders</div>
-            <div class="exp-desc">How AI is transforming energy infrastructure and sustainability at scale</div>
+            <div class="exp-name" data-i18n="spk4_name">Renewable Energy Leaders</div>
+            <div class="exp-desc" data-i18n="spk4">How AI is transforming energy infrastructure and sustainability at scale</div>
           </div>
           <div class="exp-item">
-            <div class="exp-name">MIT Faculty <span style="opacity:0.5">(invited)</span></div>
-            <div class="exp-desc">Virtual keynote on AI governance and technology leadership</div>
+            <div class="exp-name"><span data-i18n="spk5_name">MIT Faculty</span> <span style="opacity:0.5" data-i18n="spk5_tag">(invited)</span></div>
+            <div class="exp-desc" data-i18n="spk5">Virtual keynote on AI governance and technology leadership</div>
           </div>
         </div>
         <div class="exp-column">
-          <h3>Field Experiences</h3>
+          <h3 data-i18n="field_title">Field Experiences</h3>
           <div class="exp-item">
-            <div class="exp-name">AI Data Center Tour</div>
-            <div class="exp-desc">Walk through a live AI and high-performance computing facility &mdash; GPU clusters, agentic AI, and enterprise infrastructure in operation</div>
+            <div class="exp-name" data-i18n="fld1_name">AI Data Center Tour</div>
+            <div class="exp-desc" data-i18n="fld1">Walk through a live AI and high-performance computing facility &mdash; GPU clusters, agentic AI, and enterprise infrastructure in operation</div>
           </div>
           <div class="exp-item">
             <div class="exp-name">NASA Johnson Space Center</div>
-            <div class="exp-desc">Behind-the-scenes access to Mission Control, astronaut training, and innovation labs</div>
+            <div class="exp-desc" data-i18n="fld2">Behind-the-scenes access to Mission Control, astronaut training, and innovation labs</div>
           </div>
           <div class="exp-item">
-            <div class="exp-name">Texas Vineyard Excursion</div>
-            <div class="exp-desc">Optional afternoon outing for those who want a relaxed social experience (Day 3)</div>
+            <div class="exp-name" data-i18n="fld3_name">Texas Vineyard Excursion</div>
+            <div class="exp-desc" data-i18n="fld3">Optional afternoon outing for those who want a relaxed social experience (Day 3)</div>
           </div>
         </div>
       </div>
@@ -427,13 +381,10 @@
   <!-- ═══ CTA ═══ -->
   <section class="section cta-section" id="register">
     <div class="section-inner" style="max-width: 650px;">
-      <p class="section-label" style="color: var(--gold-light);">Save Your Place</p>
-      <h2>Spots are filling.</h2>
-      <p>
-        Registrations are open and our cohort is responding.<br />
-        Secure your place now &mdash; dates, speakers, and field trips are confirmed.
-      </p>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSddcmOTiGoqN4knL_17jGHDDHbPLQp7CwuKqQgE3wsud7d0kQ/viewform" class="btn-primary">Register Now</a>
+      <p class="section-label" style="color: var(--gold-light);" data-i18n="cta_label">Save Your Place</p>
+      <h2 data-i18n="cta_heading">Spots are filling.</h2>
+      <p data-i18n-html="cta_desc">Registrations are open and our cohort is responding.<br />Secure your place now &mdash; dates, speakers, and field trips are confirmed.</p>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSddcmOTiGoqN4knL_17jGHDDHbPLQp7CwuKqQgE3wsud7d0kQ/viewform" class="btn-primary" data-i18n="cta_btn">Register Now</a>
     </div>
   </section>
 
@@ -441,11 +392,113 @@
   <footer>
     <div>Immersion Live &middot; October 21&ndash;24, 2026 &middot; Houston, TX</div>
     <div><a href="https://goimmersionlive.com">goimmersionlive.com</a></div>
-    <div class="disclaimer">
-      This is an independently organized event by participants of the MIT Professional Education
-      CXO Program. It is not affiliated with, endorsed by, or sponsored by MIT.
-    </div>
+    <div class="disclaimer" data-i18n="disclaimer">This is an independently organized event by participants of the MIT Professional Education CXO Program. It is not affiliated with, endorsed by, or sponsored by MIT.</div>
   </footer>
+
+  <!-- ═══ TRANSLATION ENGINE ═══ -->
+  <script>
+    var translations = {
+      es: {
+        nav_cta: "Reg\u00edstrate Ahora",
+        hero_tagline: "M\u00e1s Profundo. M\u00e1s Lejos. En Vivo.",
+        hero_subtitle: "Cuatro d\u00edas de ponentes seleccionados, visitas exclusivas y conexiones reales \u2014 con 144 l\u00edderes de 44 pa\u00edses.<br />Llega antes o qu\u00e9date m\u00e1s tiempo para aprovechar Houston al m\u00e1ximo. El programa estructurado es del 21 al 24 de octubre.",
+        hero_cta: "Reg\u00edstrate Ahora",
+        hero_learn: "M\u00e1s Informaci\u00f3n",
+        stat1_label: "Cu\u00e1ndo",
+        stat2_label: "D\u00f3nde",
+        stat3_label: "Qui\u00e9nes",
+        stat3_value: "Nuestra Cohorte \u00b7 144 L\u00edderes \u00b7 44 Pa\u00edses",
+        stat4_label: "Programa",
+        stat4_value: "4 D\u00edas \u00b7 Extiende Tu Estancia",
+        about_label: "Qu\u00e9 es Immersion Live",
+        about_heading: "M\u00e1s que un evento. <em>Un punto de inflexi\u00f3n.</em>",
+        about_p1: "Immersion Live es una experiencia dise\u00f1ada deliberadamente para nuestra cohorte global \u2014 cuatro d\u00edas de programaci\u00f3n estructurada en torno a experiencias de campo en la NASA y la infraestructura de IA de Houston, conversaciones con l\u00edderes de NVIDIA, HPE y el sector energ\u00e9tico, y tiempo libre para conexiones reales. Profundizamos en qui\u00e9nes somos como l\u00edderes y avanzamos en lo que podemos construir juntos.",
+        about_p2: "El programa es del 21 al 24 de octubre. Muchos participantes eligen llegar un d\u00eda antes o quedarse el fin de semana para continuar la conversaci\u00f3n a su propio ritmo.",
+        about_p3: "Esta es la segunda vez que nos reunimos como cohorte, y no volveremos a encontrarnos hasta marzo de 2027. Las relaciones que formemos en Houston nos acompa\u00f1ar\u00e1n hasta entonces.",
+        pillar1_title: "Liderazgo y Autoconocimiento",
+        pillar1_desc: "Profundiza en tu identidad como l\u00edder a trav\u00e9s de foros entre pares y sesiones moderadas donde los l\u00edderes comparten momentos decisivos, fracasos y avances reales.",
+        pillar2_title: "V\u00ednculos de Cohorte",
+        pillar2_desc: "144 colegas de 44 pa\u00edses. Asientos rotados en cada comida. Grupos de trabajo de 8 a 10 personas. Noches libres para explorar Houston juntos. Aqu\u00ed es donde las conexiones profesionales se convierten en amistades para toda la vida.",
+        pillar3_title: "Estrategia e Innovaci\u00f3n",
+        pillar3_desc: "Recorre un centro de datos de IA. Entra al Control de Misi\u00f3n de la NASA. Escucha a l\u00edderes de NVIDIA, HPE y energ\u00eda renovable. Luego si\u00e9ntate con tus colegas y pregunta: \u00bfqu\u00e9 significa esto para mi organizaci\u00f3n?",
+        pillar4_title: "Perspectiva Global",
+        pillar4_desc: "Nuestra cohorte abarca continentes, industrias y culturas. Immersion Live aprovecha esa diversidad deliberadamente \u2014 con emparejamiento de socios de responsabilidad y sesiones de proyectos de impacto dise\u00f1adas para trascender el evento.",
+        sched_label: "La Agenda",
+        sched_heading: "Cuatro d\u00edas. <em>Sin relleno.</em>",
+        sched_desc: "Cada sesi\u00f3n est\u00e1 dise\u00f1ada bajo un principio: menos es m\u00e1s. Uno o dos ponentes al d\u00eda. Visitas que no puedes conseguir por tu cuenta. Y horas de tiempo libre \u2014 porque las mejores conversaciones no ocurren seg\u00fan un horario.",
+        day1_label: "D\u00eda 1", day1_date: "Mi\u00e9rcoles, Oct 21",
+        day1_1: "Llegada y Registro", day1_2: "Recepci\u00f3n de Bienvenida", day1_3: "Keynote de NVIDIA", day1_4: "Cena de Apertura",
+        day2_label: "D\u00eda 2", day2_date: "Jueves, Oct 22",
+        day2_1: "Tour al Centro de Datos de IA", day2_2: "Ponencia HPE", day2_3: "Sesiones de Trabajo en Grupo", day2_4: "Noche Libre",
+        day3_label: "D\u00eda 3", day3_date: "Viernes, Oct 23",
+        day3_1: "NASA Johnson Space Center", day3_2: "Ponencia: Energ\u00eda e IA", day3_3: "Foro de Liderazgo", day3_4: "Opcional: Vi\u00f1edo en Texas", day3_5: "Cena de Gala",
+        day4_label: "D\u00eda 4", day4_date: "S\u00e1bado, Oct 24",
+        day4_1: "Ponencia HPE", day4_2: "Taller de Proyectos de Impacto", day4_3: "Sesi\u00f3n de Cierre", day4_4: "Almuerzo de Despedida",
+        exp_label: "Lo Que Te Espera",
+        exp_heading: "A qui\u00e9n escuchar\u00e1s. <em>Lo que ver\u00e1s.</em>",
+        speakers_title: "Ponentes",
+        spk1: "La revoluci\u00f3n de la IA desde la capa de hardware",
+        spk2: "IA ag\u00e9ntica en redes empresariales a trav\u00e9s de las plataformas Juniper y Aruba",
+        spk3: "Morpheus, PCAI y la simplificaci\u00f3n de cargas de trabajo de IA para empresas",
+        spk4_name: "L\u00edderes en Energ\u00eda Renovable",
+        spk4: "C\u00f3mo la IA est\u00e1 transformando la infraestructura energ\u00e9tica y la sostenibilidad a escala",
+        spk5_name: "Facultad del MIT",
+        spk5_tag: "(invitado)",
+        spk5: "Keynote virtual sobre gobernanza de IA y liderazgo tecnol\u00f3gico",
+        field_title: "Experiencias de Campo",
+        fld1_name: "Tour al Centro de Datos de IA",
+        fld1: "Recorre una instalaci\u00f3n de IA y computaci\u00f3n de alto rendimiento en vivo \u2014 cl\u00fasteres de GPU, IA ag\u00e9ntica e infraestructura empresarial en operaci\u00f3n",
+        fld2: "Acceso exclusivo al Control de Misi\u00f3n, entrenamiento de astronautas y laboratorios de innovaci\u00f3n",
+        fld3_name: "Excursi\u00f3n a Vi\u00f1edo en Texas",
+        fld3: "Salida opcional por la tarde para quienes deseen una experiencia social relajada (D\u00eda 3)",
+        cta_label: "Reserva Tu Lugar",
+        cta_heading: "Los lugares se est\u00e1n llenando.",
+        cta_desc: "Las inscripciones est\u00e1n abiertas y nuestra cohorte est\u00e1 respondiendo.<br />Asegura tu lugar ahora \u2014 fechas, ponentes y visitas est\u00e1n confirmados.",
+        cta_btn: "Reg\u00edstrate Ahora",
+        disclaimer: "Este es un evento organizado de forma independiente por participantes del Programa CXO de MIT Professional Education. No est\u00e1 afiliado, respaldado ni patrocinado por MIT."
+      }
+    };
+
+    var englishText = {};
+    var englishHtml = {};
+
+    document.addEventListener("DOMContentLoaded", function() {
+      document.querySelectorAll("[data-i18n]").forEach(function(el) {
+        englishText[el.getAttribute("data-i18n")] = el.textContent;
+      });
+      document.querySelectorAll("[data-i18n-html]").forEach(function(el) {
+        englishHtml[el.getAttribute("data-i18n-html")] = el.innerHTML;
+      });
+    });
+
+    function setLang(lang) {
+      document.querySelectorAll(".lang-toggle button").forEach(function(btn) {
+        btn.classList.remove("active");
+      });
+      if (event && event.target) { event.target.classList.add("active"); }
+      document.documentElement.lang = lang === "es" ? "es" : "en";
+
+      if (lang === "es") {
+        document.querySelectorAll("[data-i18n]").forEach(function(el) {
+          var key = el.getAttribute("data-i18n");
+          if (translations.es[key]) el.textContent = translations.es[key];
+        });
+        document.querySelectorAll("[data-i18n-html]").forEach(function(el) {
+          var key = el.getAttribute("data-i18n-html");
+          if (translations.es[key]) el.innerHTML = translations.es[key];
+        });
+      } else {
+        document.querySelectorAll("[data-i18n]").forEach(function(el) {
+          var key = el.getAttribute("data-i18n");
+          if (englishText[key]) el.textContent = englishText[key];
+        });
+        document.querySelectorAll("[data-i18n-html]").forEach(function(el) {
+          var key = el.getAttribute("data-i18n-html");
+          if (englishHtml[key]) el.innerHTML = englishHtml[key];
+        });
+      }
+    }
+  </script>
 
 </body>
 </html>
