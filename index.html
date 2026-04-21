@@ -187,14 +187,14 @@
 
     /* ── SECTIONS ── */
     .section { padding: 6rem 2rem; }
-    .section-inner { max-width: 900px; margin: 0 auto; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
     .section-label { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-bottom: 1rem; }
     .section h2 { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 700; color: var(--navy); line-height: 1.25; margin-bottom: 1.5rem; }
     .section h2 em { font-style: italic; color: var(--teal); }
     .section p { color: var(--gray-600); font-size: 1.05rem; margin-bottom: 1.25rem; }
 
     /* ── PILLARS ── */
-    .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; margin-top: 3rem; }
+    .pillars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 3rem; }
     .pillar { background: var(--gray-100); border-radius: 12px; padding: 2.25rem; border: 1px solid var(--gray-200); transition: transform 0.2s, box-shadow 0.2s; }
     .pillar:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
     .pillar .icon { font-size: 2rem; margin-bottom: 1rem; }
@@ -203,7 +203,7 @@
 
     /* ── SCHEDULE ── */
     .schedule { background: var(--light-bg); }
-    .schedule-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    .schedule-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2.5rem; }
     .day-card { background: var(--white); border-radius: 12px; padding: 2rem; border: 1px solid var(--gray-200); border-top: 4px solid var(--navy); }
     .day-card:nth-child(2) { border-top-color: var(--teal); }
     .day-card:nth-child(3) { border-top-color: var(--gold); }
@@ -236,6 +236,10 @@
     footer .disclaimer { margin-top: 0.75rem; font-size: 0.7rem; opacity: 0.6; max-width: 600px; margin-left: auto; margin-right: auto; }
 
     /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .pillars { grid-template-columns: repeat(2, 1fr); }
+      .schedule-grid { grid-template-columns: repeat(2, 1fr); }
+    }
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
       nav .nav-right { gap: 0.5rem; }
@@ -246,6 +250,8 @@
       .section { padding: 4rem 1.5rem; }
     }
     @media (max-width: 480px) {
+      .pillars { grid-template-columns: 1fr; }
+      .schedule-grid { grid-template-columns: 1fr; }
       .stats { grid-template-columns: 1fr; }
       .stat { border-right: none; border-bottom: 1px solid var(--gray-200); }
       .stat:last-child { border-bottom: none; }
