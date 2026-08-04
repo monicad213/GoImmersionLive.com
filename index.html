@@ -1,264 +1,374 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Immersion Live — Coming Soon</title>
-  <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="A private cohort gathering. Details coming soon.">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+<style> :root { --dark-bg: #0F1629; --dark-card: #1a2541; --dark-accent: #2a3a5e; --gold: #D4A574; --teal: #00A99D; --red-accent: #E63946; --text-primary: #FFFFFF; --text-secondary: #B0B8CC; --border-color: #3a4a6e; } * { margin: 0; padding: 0; box-sizing: border-box; } html, body { background: var(--dark-bg); color: var(--text-primary); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; } .hero { background: linear-gradient(135deg, var(--dark-bg) 0%, #1a2a4a 100%); padding: 80px 40px; text-align: center; position: relative; overflow: hidden; } .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); } .hero-icons { display: flex; justify-content: center; gap: 40px; margin-bottom: 40px; font-size: 3em; animation: float 3s ease-in-out infinite; } @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } } .hero h1 { font-size: 3.5em; font-weight: 700; margin-bottom: 15px; letter-spacing: -0.02em; line-height: 1.1; } .hero .subtitle { font-size: 1.4em; color: var(--text-secondary); margin-bottom: 30px; font-weight: 300; font-style: italic; } .hero-meta { display: inline-block; border: 1px solid var(--gold); border-radius: 50px; padding: 15px 40px; margin-bottom: 50px; font-size: 1.1em; color: var(--gold); font-weight: 600; letter-spacing: 1px; } .highlight-box { background: rgba(42, 58, 94, 0.5); border: 1px solid var(--border-color); border-radius: 12px; padding: 40px; margin-bottom: 40px; max-width: 800px; margin-left: auto; margin-right: auto; backdrop-filter: blur(10px); } .highlight-box p { font-size: 1.2em; line-height: 1.8; color: var(--text-secondary); } .highlight-box strong { color: var(--gold); } .featured-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; max-width: 900px; margin: 50px auto; } .featured-item { text-align: center; padding: 20px; } .featured-item-icon { font-size: 2.5em; margin-bottom: 15px; } .featured-item-label { font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); font-weight: 600; } .cta-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 50px 0; } .btn { padding: 16px 40px; border-radius: 6px; font-weight: 600; font-size: 1.05em; cursor: pointer; border: none; transition: all 0.3s ease; text-decoration: none; display: inline-block; } .btn-primary { background: var(--red-accent); color: white; } .btn-primary:hover { background: #ff4757; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(230, 57, 70, 0.3); } .btn-secondary { background: transparent; color: var(--gold); border: 2px solid var(--gold); } .btn-secondary:hover { background: rgba(212, 165, 116, 0.1); transform: translateY(-2px); } .container { max-width: 1000px; margin: 0 auto; padding: 60px 40px; } .section { margin-bottom: 60px; scroll-margin-top: 100px; } .section-title { font-size: 2.5em; font-weight: 700; margin-bottom: 40px; text-align: center; position: relative; padding-bottom: 20px; } .section-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 3px; background: var(--gold); } .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin-bottom: 50px; } .stat-card { background: var(--dark-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 30px; text-align: center; transition: all 0.3s ease; } .stat-card:hover { border-color: var(--gold); background: rgba(212, 165, 116, 0.05); } .stat-number { font-size: 3em; font-weight: 700; color: var(--gold); margin-bottom: 10px; } .stat-label { font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); } .day-schedule { background: var(--dark-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 30px; margin-bottom: 30px; } .day-header { font-size: 1.3em; font-weight: 700; color: var(--gold); margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid var(--border-color); } .schedule-item { padding: 15px 0; border-bottom: 1px solid var(--border-color); display: grid; grid-template-columns: 120px 1fr; gap: 20px; } .schedule-item:last-child { border-bottom: none; } .schedule-time { color: var(--teal); font-weight: 600; font-size: 0.9em; } .schedule-activity { color: var(--text-secondary); } .schedule-activity strong { color: var(--text-primary); } .speaker-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; } .speaker-card { background: var(--dark-card); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; transition: all 0.3s ease; } .speaker-card:hover { border-color: var(--gold); box-shadow: 0 10px 30px rgba(212, 165, 116, 0.15); } .speaker-photo { width: 100%; height: 200px; background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-bg) 100%); display: flex; align-items: center; justify-content: center; font-size: 4em; border-bottom: 1px solid var(--border-color); } .speaker-info { padding: 20px; } .speaker-info h3 { color: var(--gold); font-size: 1.1em; margin-bottom: 5px; } .speaker-company { color: var(--teal); font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; } .speaker-title { font-size: 0.9em; color: var(--text-secondary); margin-bottom: 10px; } .speaker-bio { font-size: 0.85em; line-height: 1.6; } .accordion { background: var(--dark-card); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 15px; overflow: hidden; } .accordion-header { padding: 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: all 0.3s ease; } .accordion-header:hover { background: rgba(212, 165, 116, 0.05); } .accordion-header h3 { color: var(--gold); margin: 0; font-size: 1.1em; } .accordion-icon { font-size: 1.5em; transition: transform 0.3s ease; } .accordion.active .accordion-icon { transform: rotate(180deg); } .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; } .accordion.active .accordion-content { max-height: 1000px; } .accordion-body { padding: 0 20px 20px 20px; color: var(--text-secondary); } .form-container { background: var(--dark-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 40px; } .form-section-title { font-size: 1.3em; font-weight: 700; color: var(--gold); margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid var(--border-color); } .form-group { margin-bottom: 20px; } .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; } label { display: block; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; font-size: 0.95em; } .required { color: var(--red-accent); } input[type="text"], input[type="email"], input[type="tel"], input[type="url"], textarea, select { width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-color); border-radius: 4px; color: var(--text-primary); font-family: inherit; transition: all 0.3s ease; } input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, input[type="url"]:focus, textarea:focus, select:focus { outline: none; border-color: var(--gold); background: rgba(212, 165, 116, 0.1); } textarea { resize: vertical; min-height: 100px; } .form-help { font-size: 0.8em; color: var(--text-secondary); margin-top: 5px; } .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px; } .checkbox-item { display: flex; align-items: center; gap: 8px; } .checkbox-item input[type="checkbox"], .checkbox-item input[type="radio"] { cursor: pointer; } .checkbox-item label { margin: 0; font-weight: 400; cursor: pointer; font-size: 0.9em; } .form-buttons { display: flex; gap: 15px; justify-content: center; margin-top: 40px; } .btn-submit { padding: 16px 50px; background: var(--red-accent); color: white; border: none; border-radius: 6px; font-weight: 600; font-size: 1em; cursor: pointer; transition: all 0.3s ease; } .btn-submit:hover { background: #ff4757; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(230, 57, 70, 0.3); } .btn-reset { padding: 16px 50px; background: transparent; color: var(--text-secondary); border: 1px solid var(--border-color); border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; } .btn-reset:hover { border-color: var(--gold); color: var(--gold); } .hotels-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; } .hotel-card { background: var(--dark-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 25px; transition: all 0.3s ease; } .hotel-card:hover { border-color: var(--gold); box-shadow: 0 10px 30px rgba(212, 165, 116, 0.15); } .hotel-card h3 { color: var(--gold); margin-bottom: 10px; font-size: 1.1em; } .hotel-card p { color: var(--text-secondary); font-size: 0.9em; margin-bottom: 8px; } .hotel-card a { color: var(--teal); text-decoration: none; font-weight: 600; } .hotel-card a:hover { text-decoration: underline; } .footer { background: rgba(15, 22, 41, 0.8); border-top: 1px solid var(--border-color); padding: 40px; text-align: center; color: var(--text-secondary); } .footer p { margin: 10px 0; } .footer strong { color: var(--gold); } @media (max-width: 768px) { .hero h1 { font-size: 2.2em; } .hero-icons { font-size: 2em; gap: 20px; } .section-title { font-size: 1.8em; } .schedule-item { grid-template-columns: 80px 1fr; gap: 15px; } .form-buttons { flex-direction: column; } .btn-submit, .btn-reset { width: 100%; } } </style> <!-- HERO SECTION --> <div class="hero"> <div class="hero-icons"> <span>🚀</span> <span>🤖</span> <span>🛰️</span> </div> <h1>Houston, We Have a Problem</h1> <p class="subtitle">...it's that we can't tell you everything yet.</p> <div class="hero-meta">OCTOBER 19–22, 2026 • HOUSTON, TEXAS</div> <div class="highlight-box"> <p>Something extraordinary is being built for the cohort — four days in October that involve <strong>rockets</strong>, <strong>GPUs</strong>, <strong>big ideas</strong>, and the kind of conversations you can only have with people who get it.</p> </div> <div class="featured-items"> <div class="featured-item"> <div class="featured-item-icon">🌌</div> <div class="featured-item-label">Mission Control</div> </div> <div class="featured-item"> <div class="featured-item-icon">🧠</div> <div class="featured-item-label">AI at Scale</div> </div> <div class="featured-item"> <div class="featured-item-icon">⚡</div> <div class="featured-item-label">Energy Future</div> </div> <div class="featured-item"> <div class="featured-item-icon">🤝</div> <div class="featured-item-label">The Cohort</div> </div> <div class="featured-item"> <div class="featured-item-icon">🍖</div> <div class="featured-item-label">Texas BBQ</div> </div> </div> <div class="cta-buttons"> <a href="#register" class="btn btn-primary">Register Now</a> <a href="#schedule" class="btn btn-secondary">See Schedule</a> </div> </div> <!-- MAIN CONTENT --> <div class="container"> <!-- QUICK FACTS --> <div class="section"> <h2 class="section-title">The Experience</h2> <div class="stats-grid"> <div class="stat-card"> <div class="stat-number">4</div> <div class="stat-label">Days</div> </div> <div class="stat-card"> <div class="stat-number">7+</div> <div class="stat-label">Speakers</div> </div> <div class="stat-card"> <div class="stat-number">2</div> <div class="stat-label">Field Trips</div> </div> <div class="stat-card"> <div class="stat-number">144</div> <div class="stat-label">Participants</div> </div> <div class="stat-card"> <div class="stat-number">44</div> <div class="stat-label">Countries</div> </div> </div>
+<p style="text-align: center; font-size: 1.1em; color: var(--text-secondary); margin-top: 40px;">
+  We're putting the finishing touches on the agenda, the speakers, and a few surprises we're not allowed to spoil yet. 
+  <strong style="color: var(--gold);">Sworn to secrecy. Astronaut's honor. 🫡</strong>
+</p>
+</div> <!-- SCHEDULE SECTION --> <div class="section" id="schedule"> <h2 class="section-title">Four-Day Schedule</h2>
+<div class="day-schedule">
+  <div class="day-header">📅 Day 1 — Monday, October 19: Arrival & Opening</div>
+  <div class="schedule-item">
+    <div class="schedule-time">11:00 AM–2:00 PM</div>
+    <div class="schedule-activity"><strong>Arrival & Check-In @ HP Enterprise</strong> — Welcome packets, participant directory, Houston guide</div>
+  </div>
+  <div class="schedule-item">
+    <div class="schedule-time">2:00–3:00 PM</div>
+    <div class="schedule-activity"><strong>Opening Remarks</strong> — Organizers set the tone for the four days ahead</div>
+  </div>
+  <div class="schedule-item">
+    <div class="schedule-time">3:30–5:00 PM</div>
+    <div class="schedule-activity"><strong>🎯 Keynote: The AI Landscape</strong> — NVIDIA leader on AI revolution from hardware layer up</div>
+  </div>
+  <div class="schedule-item">
+    <div class="schedule-time">5:30–7:30 PM</div>
+    <div class="schedule-activity"><strong>Reception</strong> — Social gathering</div>
+  </div>
+</div>
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: linear-gradient(135deg, #0a1628 0%, #1a2f5c 50%, #2d1b4e 100%);
-      background-attachment: fixed;
-      color: white;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem 1rem;
-      overflow-x: hidden;
-    }
+<div class="day-schedule">
+  <div class="day-header">📅 Day 2 — Tuesday, October 20: Innovation in Practice</div>
+  <div class="schedule-item">
+    <div class="schedule-time">9:30–11:30 AM</div>
+    <div class="schedule-activity"><strong>🏢 HP Enterprise AI Data Center Tour</strong> — See enterprise AI infrastructure in operation</div>
+  </div>
+  <div class="schedule-item">
+    <div class="schedule-time">1:00–2:30 PM</div>
+    <div class="schedule-activity"><strong>Speaker: AI in Enterprise Networks</strong> — Juniper/Aruba agentic AI applications</div>
+  </div>
+  <div class="schedule-item">
+    <div class="schedule-time">2:45–4:00 PM</div>
+    <div class="schedule-activity"><strong>Peer Breakout Sessions</strong> — Discuss AI infrastructure impact by industry</div>
+  </div>
+  <div class="schedule-item">
+    <div class="schedule-time">5:00 PM+</div>
+    <div class="schedule-activity"><strong>Free Evening</strong> — Self-organized groups & curated restaurant recommendations</div>
+  </div>
+</div>
 
-    /* Subtle starfield */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-image:
-        radial-gradient(1px 1px at 20% 30%, white, transparent),
-        radial-gradient(1px 1px at 60% 70%, white, transparent),
-        radial-gradient(1px 1px at 80% 20%, white, transparent),
-        radial-gradient(1px 1px at 30% 80%, white, transparent),
-        radial-gradient(1px 1px at 90% 50%, white, transparent),
-        radial-gradient(1px 1px at 10% 60%, white, transparent),
-        radial-gradient(2px 2px at 50% 15%, white, transparent),
-        radial-gradient(1px 1px at 70% 90%, white, transparent);
-      background-size: 100% 100%;
-      opacity: 0.4;
-      pointer-events: none;
-      animation: twinkle 8s ease-in-out infinite;
-    }
+<div class="day-schedule">
+  <div class="day-header">📅 Day 3 — Wednesday, October 21: Exploration & Depth</div>
+  <div class="schedule-item">
+    <div class="schedule-time">9:00–10:30 AM</div>
+    <div class="schedule-activity"><strong>Digital Transformation in Global R&D</strong> — Kris Kupilas (ArcelorMittal)</div>
+  </div>
+  <div class="schedule-item">
+    <div class="schedule-time">10:45 AM–12:00 PM</div>
+    <div class="schedule-activity"><strong>HP Enterprise: Infrastructure Automation</strong> — Morpheus, PCAI solutions</div>
+  </div>
+  <div class="schedule-item">
+    <div class="schedule-time">1:30–3:00 PM</div>
+    <div class="schedule-activity"><strong>Energy Transition & AI</strong> — Renewable energy leaders</div>
+  </div>
+  <div class="schedule-item">
+    <div class="schedule-time">3:15–5:30 PM</div>
+    <div class="schedule-activity"><strong>Impact Project Gathering</strong> — Define projects & pair accountability partners</div>
+  </div>
+</div>
 
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 0.6; }
-    }
-
-    .container {
-      max-width: 720px;
-      width: 100%;
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
-
-    .top-bar {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      color: rgba(255,255,255,0.5);
-      text-transform: uppercase;
-      margin-bottom: 4rem;
-    }
-
-    .icon-row {
-      font-size: clamp(40px, 8vw, 64px);
-      letter-spacing: 0.25em;
-      margin-bottom: 1.5rem;
-      animation: float 6s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-
-    h1 {
-      font-size: clamp(32px, 6vw, 52px);
-      font-weight: 300;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.75rem;
-      line-height: 1.1;
-    }
-
-    .subtitle {
-      font-size: clamp(18px, 3vw, 24px);
-      font-weight: 300;
-      color: rgba(255,255,255,0.85);
-      font-style: italic;
-      margin-bottom: 2rem;
-    }
-
-    .date-badge {
-      display: inline-block;
-      padding: 0.6rem 1.5rem;
-      background: rgba(255,215,0,0.12);
-      border: 1px solid rgba(255,215,0,0.4);
-      border-radius: 999px;
-      font-size: clamp(13px, 2vw, 15px);
-      letter-spacing: 0.15em;
-      color: #ffd700;
-      text-transform: uppercase;
-      font-weight: 500;
-      margin-bottom: 2.5rem;
-    }
-
-    .message-box {
-      max-width: 560px;
-      margin: 0 auto 2.5rem;
-      padding: 1.75rem;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 16px;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-
-    .message-box p {
-      font-size: clamp(15px, 2.2vw, 17px);
-      line-height: 1.7;
-      color: rgba(255,255,255,0.92);
-    }
-
-    .message-box strong {
-      font-weight: 500;
-    }
-
-    .accent-gold { color: #ffd700; }
-    .accent-cyan { color: #64ffda; }
-    .accent-coral { color: #ff8a65; }
-
-    .icons-grid {
-      display: flex;
-      justify-content: center;
-      gap: clamp(1rem, 4vw, 2.5rem);
-      flex-wrap: wrap;
-      margin-bottom: 2.5rem;
-    }
-
-    .icon-card {
-      text-align: center;
-      min-width: 80px;
-    }
-
-    .icon-card .emoji {
-      font-size: clamp(28px, 5vw, 40px);
-      margin-bottom: 0.4rem;
-      display: block;
-    }
-
-    .icon-card .label {
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      color: rgba(255,255,255,0.6);
-      text-transform: uppercase;
-    }
-
-    .secret-text {
-      font-size: clamp(14px, 2vw, 16px);
-      line-height: 1.7;
-      color: rgba(255,255,255,0.7);
-      max-width: 500px;
-      margin: 0 auto 1.5rem;
-    }
-
-    .secret-text em {
-      color: rgba(255,255,255,0.5);
-      font-size: 0.92em;
-    }
-
-    .footer-message {
-      font-size: 14px;
-      color: rgba(255,255,255,0.55);
-      margin-bottom: 0.5rem;
-    }
-
-    .footer-tagline {
-      font-size: 13px;
-      color: rgba(255,255,255,0.4);
-      font-style: italic;
-    }
-
-    .bottom-bar {
-      margin-top: 3rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      font-size: 11px;
-      color: rgba(255,255,255,0.35);
-      letter-spacing: 0.2em;
-    }
-
-    @media (max-width: 600px) {
-      .top-bar {
-        flex-direction: column;
-        gap: 0.5rem;
-        text-align: center;
-        margin-bottom: 2.5rem;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="top-bar">
-      <span>CXO &nbsp;•&nbsp; Off-Campus</span>
-      <span>Houston, TX</span>
-    </div>
-
-    <div class="icon-row">🚀 🤖 🛰️</div>
-
-    <h1>Houston, we have a problem.</h1>
-    <p class="subtitle">…it's that we can't tell you everything yet.</p>
-
-    <div class="date-badge">October 19–22, 2026 &nbsp;•&nbsp; Houston, Texas</div>
-
-    <div class="message-box">
-      <p>
-        Something extraordinary is being built for the cohort — four days in October that involve
-        <strong class="accent-gold">rockets</strong>,
-        <strong class="accent-cyan">GPUs</strong>,
-        <strong class="accent-coral">big ideas</strong>, and the kind of conversations you can only have with people who get it.
-      </p>
-    </div>
-
-    <div class="icons-grid">
-      <div class="icon-card">
-        <span class="emoji">🌌</span>
-        <span class="label">Mission Control</span>
-      </div>
-      <div class="icon-card">
-        <span class="emoji">🧠</span>
-        <span class="label">AI at Scale</span>
-      </div>
-      <div class="icon-card">
-        <span class="emoji">⚡</span>
-        <span class="label">Energy Future</span>
-      </div>
-      <div class="icon-card">
-        <span class="emoji">🤝</span>
-        <span class="label">The Cohort</span>
-      </div>
-      <div class="icon-card">
-        <span class="emoji">🍖</span>
-        <span class="label">Texas BBQ</span>
-      </div>
-    </div>
-
-    <p class="secret-text">
-      We're putting the finishing touches on the agenda, the speakers, and a few surprises we're not allowed to spoil yet.
-      <em>(Sworn to secrecy. Astronaut's honor. 🫡)</em>
-    </p>
-
-    <p class="footer-message">Cohort members will hear from us soon.</p>
-    <p class="footer-tagline">Until then — keep building, keep questioning, keep showing up.</p>
-
-    <div class="bottom-bar">
-      RECONNECT &nbsp;•&nbsp; EXCHANGE &nbsp;•&nbsp; GROW
+<div class="day-schedule">
+  <div class="day-header">📅 Day 4 — Thursday, October 22: Forward Together</div>
+  <div class="schedule-item">
+    <div class="schedule-time">9:00–10:15 AM</div>
+    <div class="schedule-activity"><strong>Space, AI, and the Frontier of Autonomy</strong> — Richard Linares (MIT AeroAstro)</div>
+  </div>
+  <div class="schedule-item">
+    <div class="schedule-time">10:30 AM–5:00 PM</div>
+    <div class="schedule-activity"><strong>🚀 NASA Johnson Space Center Field Trip</strong> — Mission Control, astronaut training, innovation labs</div>
+  </div>
+  <div class="schedule-item">
+    <div class="schedule-time">7:30–10:00 PM</div>
+    <div class="schedule-activity"><strong>Closing Dinner & Celebration</strong> — Cohort toasts and reflection</div>
+  </div>
+</div>
+</div> <!-- SPEAKERS SECTION --> <div class="section"> <h2 class="section-title">World-Class Speakers</h2> <div class="speaker-grid">
+  <div class="speaker-card">
+    <div class="speaker-photo">🤖</div>
+    <div class="speaker-info">
+      <div class="speaker-company">NVIDIA</div>
+      <h3>Keynote Speaker</h3>
+      <div class="speaker-title">AI Revolution Leaders</div>
+      <p class="speaker-bio">NVIDIA executive delivering a keynote on the AI revolution and how NVIDIA's ecosystem powers enterprise infrastructure from the hardware layer up.</p>
     </div>
   </div>
-</body>
-</html>
+
+  <div class="speaker-card">
+    <div class="speaker-photo">⚙️</div>
+    <div class="speaker-info">
+      <div class="speaker-company">ArcelorMittal</div>
+      <h3>Kris Kupilas</h3>
+      <div class="speaker-title">R&D Digital Transformation Lead</div>
+      <p class="speaker-bio">25+ years across EDS, HP, and HP Enterprise. Now leading digital transformation in global R&D for the world's largest steel manufacturer.</p>
+    </div>
+  </div>
+
+  <div class="speaker-card">
+    <div class="speaker-photo">🚀</div>
+    <div class="speaker-info">
+      <div class="speaker-company">MIT AeroAstro</div>
+      <h3>Richard Linares</h3>
+      <div class="speaker-title">Associate Professor & Co-Director</div>
+      <p class="speaker-bio">Research in astrodynamics, space situational awareness, space traffic management, and AI applied to space systems.</p>
+    </div>
+  </div>
+
+  <div class="speaker-card">
+    <div class="speaker-photo">🌐</div>
+    <div class="speaker-info">
+      <div class="speaker-company">HP Enterprise</div>
+      <h3>AI in Enterprise Networks</h3>
+      <div class="speaker-title">Product Manager, Juniper/Aruba</div>
+      <p class="speaker-bio">Agentic AI applied to enterprise networking through Juniper and Aruba platforms. Real-world automation and intelligence.</p>
+    </div>
+  </div>
+
+  <div class="speaker-card">
+    <div class="speaker-photo">💻</div>
+    <div class="speaker-info">
+      <div class="speaker-company">HP Enterprise</div>
+      <h3>Matt Huron</h3>
+      <div class="speaker-title">Morpheus Automation Lead</div>
+      <p class="speaker-bio">Infrastructure automation and enterprise solutions. Morpheus, PCAI, and all-in-one solutions for enterprise at scale.</p>
+    </div>
+  </div>
+
+  <div class="speaker-card">
+    <div class="speaker-photo">⚡</div>
+    <div class="speaker-info">
+      <div class="speaker-company">Renewable Energy</div>
+      <h3>Energy Leaders</h3>
+      <div class="speaker-title">2 Industry Experts</div>
+      <p class="speaker-bio">Technology transformation in renewable energy. How AI and digital innovation are reshaping energy infrastructure at global scale.</p>
+    </div>
+  </div>
+
+</div>
+</div> <!-- FIELD TRIPS SECTION --> <div class="section"> <h2 class="section-title">Immersive Experiences</h2>
+<div class="accordion">
+  <div class="accordion-header" onclick="toggleAccordion(this)">
+    <h3>🏢 HP Enterprise AI Data Center (Days 1–3)</h3>
+    <span class="accordion-icon">▼</span>
+  </div>
+  <div class="accordion-content">
+    <div class="accordion-body">
+      <p><strong>What You'll See:</strong> Enterprise AI infrastructure in operation—GPU clusters, cooling systems, agentic AI deployment, and the operational complexity of running AI at scale.</p>
+      <p style="margin-top: 15px;"><strong>Purpose:</strong> Translates digital transformation concepts from the CXO curriculum into the physical reality of enterprise AI operations.</p>
+      <p style="margin-top: 15px;"><strong>Hosts:</strong> HP Enterprise C-level leadership</p>
+    </div>
+  </div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header" onclick="toggleAccordion(this)">
+    <h3>🚀 NASA Johnson Space Center (Day 4)</h3>
+    <span class="accordion-icon">▼</span>
+  </div>
+  <div class="accordion-content">
+    <div class="accordion-body">
+      <p><strong>Duration:</strong> 10:30 AM – 5:00 PM (full day)</p>
+      <p><strong>Access:</strong> Curated, full-day visit designed specifically for this cohort—not a standard public tour.</p>
+      <p><strong>Highlights:</strong></p>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>Mission Control access</li>
+        <li>Astronaut training facilities</li>
+        <li>Innovation labs</li>
+      </ul>
+      <p style="margin-top: 15px;"><strong>Why This Matters:</strong> NASA represents the benchmark for complex systems management, risk governance, and innovation under constraint—essential perspectives for senior technology leaders.</p>
+    </div>
+  </div>
+</div>
+</div> <!-- HOTELS SECTION --> <div class="section"> <h2 class="section-title">Accommodations</h2> <p style="text-align: center; color: var(--text-secondary); margin-bottom: 40px;">Three premium hotel options in the Spring, TX area (near event venues)</p>
+<div class="hotels-grid">
+  <div class="hotel-card">
+    <h3>Houston CityPlace Marriott at Springwoods Village</h3>
+    <p>1200 Lake Plaza Dr, Spring, TX 77389</p>
+    <p><a href="tel:+12813504000">(281) 350-4000</a></p>
+  </div>
+  <div class="hotel-card">
+    <h3>Residence Inn by Marriott Houston City Place</h3>
+    <p>22814 Holzwarth Rd, Spring, TX 77389</p>
+    <p><a href="tel:+12813532237">(281) 353-2237</a></p>
+  </div>
+  <div class="hotel-card">
+    <h3>Courtyard by Marriott Houston City Place</h3>
+    <p>22742 Holzwarth Rd, Spring, TX 77389</p>
+    <p><a href="tel:+12813531910">(281) 353-1910</a></p>
+  </div>
+</div>
+</div> <!-- REGISTRATION SECTION --> <div class="section" id="register"> <h2 class="section-title">Register for the Event</h2> <p style="text-align: center; color: var(--text-secondary); margin-bottom: 40px; font-size: 1.05em;"> Complete the form below to secure your spot. All fields marked with <span style="color: var(--red-accent);">*</span> are required. </p>
+<div class="form-container">
+  <form id="registrationForm" method="POST" action="https://formspree.io/f/YOUR_FORM_ID">
+
+    <!-- PERSONAL INFO -->
+    <div style="margin-bottom: 40px;">
+      <h3 class="form-section-title">👤 Personal Information</h3>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First Name <span class="required">*</span></label>
+          <input type="text" id="firstName" name="firstName" required>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name <span class="required">*</span></label>
+          <input type="text" id="lastName" name="lastName" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email">Email Address <span class="required">*</span></label>
+          <input type="email" id="email" name="email" required>
+          <div class="form-help">We'll send event details and updates here</div>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number <span class="required">*</span></label>
+          <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000" required>
+          <div class="form-help">Include country code</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="whatsapp">WhatsApp Number (Optional)</label>
+          <input type="tel" id="whatsapp" name="whatsapp" placeholder="+1 (555) 000-0000">
+          <div class="form-help">For cohort coordination</div>
+        </div>
+        <div class="form-group">
+          <label for="linkedin">LinkedIn Profile URL</label>
+          <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/yourprofile">
+        </div>
+      </div>
+    </div>
+
+    <!-- EMPLOYER INFO -->
+    <div style="margin-bottom: 40px;">
+      <h3 class="form-section-title">💼 Professional Information</h3>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="company">Company/Organization <span class="required">*</span></label>
+          <input type="text" id="company" name="company" required>
+        </div>
+        <div class="form-group">
+          <label for="jobTitle">Job Title <span class="required">*</span></label>
+          <input type="text" id="jobTitle" name="jobTitle" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="industry">Industry/Sector <span class="required">*</span></label>
+          <select id="industry" name="industry" required>
+            <option value="">-- Select Industry --</option>
+            <option value="Technology">Technology</option>
+            <option value="Energy">Energy & Utilities</option>
+            <option value="Manufacturing">Manufacturing</option>
+            <option value="Finance">Finance & Banking</option>
+            <option value="Healthcare">Healthcare</option>
+            <option value="Telecommunications">Telecommunications</option>
+            <option value="Government">Government</option>
+            <option value="Consulting">Consulting</option>
+            <option value="Aerospace">Aerospace & Defense</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="country">Country <span class="required">*</span></label>
+          <input type="text" id="country" name="country" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- BIO -->
+    <div style="margin-bottom: 40px;">
+      <h3 class="form-section-title">📖 About You</h3>
+
+      <div class="form-group">
+        <label for="bio">Professional Bio <span class="required">*</span></label>
+        <textarea id="bio" name="bio" required placeholder="Tell us about yourself, your background, role, and what you hope to get from this event. (200-400 words)"></textarea>
+        <div class="form-help">This helps us tailor the experience for you</div>
+      </div>
+
+      <div class="form-group">
+        <label>What are you most interested in?</label>
+        <div class="checkbox-group">
+          <div class="checkbox-item">
+            <input type="checkbox" id="interest_ai" name="interests" value="AI & Machine Learning">
+            <label for="interest_ai">AI & Machine Learning</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="interest_digital" name="interests" value="Digital Transformation">
+            <label for="interest_digital">Digital Transformation</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="interest_energy" name="interests" value="Energy & Sustainability">
+            <label for="interest_energy">Energy & Sustainability</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="interest_space" name="interests" value="Space & Autonomy">
+            <label for="interest_space">Space & Autonomy</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="interest_enterprise" name="interests" value="Enterprise Solutions">
+            <label for="interest_enterprise">Enterprise Solutions</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOGISTICS -->
+    <div style="margin-bottom: 40px;">
+      <h3 class="form-section-title">🍽️ Special Requirements</h3>
+
+      <div class="form-group">
+        <label for="dietary">Dietary Restrictions/Preferences</label>
+        <input type="text" id="dietary" name="dietary" placeholder="E.g., Vegetarian, Gluten-free, Halal">
+        <div class="form-help">We'll accommodate your needs</div>
+      </div>
+
+      <div class="form-group">
+        <label for="accessibility">Accessibility Needs</label>
+        <textarea id="accessibility" name="accessibility" placeholder="Any accommodations you may need"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Will you attend in person? <span class="required">*</span></label>
+        <div class="checkbox-group">
+          <div class="checkbox-item">
+            <input type="radio" id="attending_yes" name="attending" value="Yes, all four days" required>
+            <label for="attending_yes">Yes, all four days</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="radio" id="attending_partial" name="attending" value="Partial attendance">
+            <label for="attending_partial">Partial attendance</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="attendingDetails">If partial, which days?</label>
+        <input type="text" id="attendingDetails" name="attendingDetails" placeholder="E.g., Days 2 & 3">
+      </div>
+    </div>
+
+    <!-- CONSENT -->
+    <div style="margin-bottom: 40px;">
+      <h3 class="form-section-title">✓ Confirmation</h3>
+
+      <div class="checkbox-item" style="margin-bottom: 15px;">
+        <input type="checkbox" id="consent" name="consent" required>
+        <label for="consent">I confirm my information is accurate and I plan to attend <span class="required">*</span></label>
+      </div>
+
+      <div class="checkbox-item">
+        <input type="checkbox" id="newsletter" name="newsletter" checked>
+        <label for="newsletter">Send me updates about CXO Off-Campus and the cohort community</label>
+      </div>
+    </div>
+
+    <div class="form-buttons">
+      <button type="submit" class="btn-submit">🚀 Secure My Spot</button>
+      <button type="reset" class="btn-reset">Clear Form</button>
+    </div>
+
+  </form>
+</div>
+</div> </div> <!-- FOOTER --> <div class="footer"> <p><strong>CXO Off-Campus: Between residencies, on our terms</strong></p> <p>October 19–22, 2026 • Houston, Texas</p> <p style="margin-top: 20px; font-size: 0.9em;">Organized by cohort members: Monica Delgado, Ph.D. • Cory Martin • Chet Bhat</p> <p style="margin-top: 15px; color: #707a8f; font-size: 0.85em;">Reconnect • Exchange • Grow</p> </div> <script> function toggleAccordion(header) { const accordion = header.parentElement; accordion.classList.toggle('active'); } // Form handling document.getElementById('registrationForm').addEventListener('submit', function(e) { const requiredFields = this.querySelectorAll('[required]'); let isValid = true; requiredFields.forEach(field => { if (!field.value || (field.type === 'checkbox' && !field.checked)) { field.style.borderColor = 'var(--red-accent)'; isValid = false; } }); if (!isValid) { e.preventDefault(); alert('Please fill in all required fields'); } }); </script>
