@@ -1,0 +1,745 @@
+#!/usr/bin/env bash
+# ============================================================================
+#  Event registration page — creates the whole repo in one go.
+#
+#  Paste this entire block into a terminal, press Enter, done.
+#  It creates a folder, writes every file, installs, and makes a git commit.
+# ============================================================================
+set -e
+
+mkdir -p event-registration/api event-registration/public
+cd event-registration
+
+# ---------------------------------------------------------------- package.json
+cat > package.json <<'PKGEOF'
+{
+  "name": "event-registration",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env server.js",
+    "dev": "node --env-file=.env server.js"
+  },
+  "engines": { "node": ">=20.6" },
+  "dependencies": { "nodemailer": "^6.9.14" }
+}
+PKGEOF
+
+# ----------------------------------------------------------------- .gitignore
+cat > .gitignore <<'GITEOF'
+node_modules/
+.env
+.vercel
+.DS_Store
+GITEOF
+
+# --------------------------------------------------------------- .env.example
+cat > .env.example <<'ENVEOF'
+# Gmail/Workspace: host smtp.gmail.com, port 587, and SMTP_PASS must be a
+# 16-character App Password from myaccount.google.com/apppasswords
+# (requires 2-Step Verification on). Your normal password will NOT work.
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=you@example.com
+SMTP_PASS=your-16-char-app-password
+
+MAIL_FROM_NAME=Immersion Week
+MAIL_FROM_EMAIL=you@example.com
+CONTACT_EMAIL=you@example.com
+
+# Everyone who gets alerted on each signup. Comma-separated.
+ORGANIZER_EMAILS=you@example.com
+
+# Optional: POST every registration to a Google Sheet / Zapier / Make webhook.
+REGISTRATIONS_WEBHOOK_URL=
+ENVEOF
+
+# ------------------------------------------------------------ api/register.js
+cat > api/register.js <<'APIEOF'
+import nodemailer from "nodemailer";
+
+/* ===========================================================================
+   1. EDIT YOUR EVENT DETAILS HERE
+   =========================================================================== */
+const EVENT = {
+  name: "Immersion Week",
+  programName: "MIT Program Cohort",
+  dates: "Monday 12 - Friday 16 October 2026",
+  location: "Cambridge, MA",
+  venue: "Venue TBC - full details to follow",
+  contactName: "Immersion Week organizers",
+};
+
+/* ===========================================================================
+   2. Everything below works as-is.
+   =========================================================================== */
+
+const FROM_NAME = process.env.MAIL_FROM_NAME || "Immersion Week";
+const FROM_EMAIL = process.env.MAIL_FROM_EMAIL || "organizers@example.com";
+const CONTACT = process.env.CONTACT_EMAIL || FROM_EMAIL;
+const ORGANIZERS = (process.env.ORGANIZER_EMAILS || "")
+  .split(",").map((a) => a.trim()).filter(Boolean);
+
+/* ---------- validation ---------- */
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@.]+\.[^\s@]{2,}$/;
+
+function clean(value, max) {
+  if (typeof value !== "string") return "";
+  return value.replace(/\s+/g, " ").trim().slice(0, max);
+}
+
+function validate(body) {
+  const data = {
+    name: clean(body.name, 120),
+    email: clean(body.email, 254).toLowerCase(),
+    cohort: clean(body.cohort, 80),
+    organization: clean(body.organization, 160),
+    role: clean(body.role, 120),
+    notes: clean(body.notes, 1000),
+    consent: body.consent === true || body.consent === "true" || body.consent === "on",
+  };
+  const errors = {};
+  if (data.name.length < 2) errors.name = "Enter your full name.";
+  if (!EMAIL_PATTERN.test(data.email))
+    errors.email = "Enter an email address we can send your confirmation to.";
+  if (!data.cohort)
+    errors.cohort = "Tell us which program and year, so we can seat you with your cohort.";
+  if (!data.consent) errors.consent = "Tick the box so we can email you about this event.";
+  return { ok: Object.keys(errors).length === 0, data, errors };
+}
+
+/* ---------- email bodies ---------- */
+
+// Registrant input is echoed into both emails, so it is escaped first.
+function esc(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+const LABEL =
+  "font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.14em;" +
+  "text-transform:uppercase;color:#4a5875;";
+
+const shell = (inner) => `<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#e9edf1;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#e9edf1;padding:32px 16px;">
+<tr><td align="center"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+style="max-width:560px;background:#ffffff;border:1px solid #c3cdd8;">
+<tr><td style="padding:32px;font-family:Georgia,serif;font-size:16px;line-height:1.6;color:#0f1b33;">
+${inner}
+</td></tr></table></td></tr></table></body></html>`;
+
+function rows(pairs) {
+  return pairs.filter(([, v]) => v).map(([label, value]) => `
+<tr><td style="padding:8px 16px 8px 0;vertical-align:top;white-space:nowrap;${LABEL}">${esc(label)}</td>
+<td style="padding:8px 0;vertical-align:top;font-family:Georgia,serif;font-size:15px;color:#0f1b33;">${esc(value)}</td></tr>`
+  ).join("");
+}
+
+function confirmationEmail(d) {
+  const first = d.name.split(" ")[0];
+  return {
+    subject: `You're registered - ${EVENT.name}, ${EVENT.dates}`,
+    html: shell(`
+<p style="margin:0 0 20px;${LABEL}">${esc(EVENT.programName)}</p>
+<h1 style="margin:0 0 20px;font-family:Georgia,serif;font-size:28px;line-height:1.2;font-weight:normal;color:#0f1b33;">You're registered for ${esc(EVENT.name)}.</h1>
+<p style="margin:0 0 24px;">Thanks, ${esc(first)}. Your place is held. Here is what we have for you:</p>
+<table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-top:1px solid #c3cdd8;border-bottom:1px solid #c3cdd8;margin:0 0 24px;">
+${rows([["When", EVENT.dates], ["Where", `${EVENT.venue}, ${EVENT.location}`],
+        ["Name", d.name], ["Email", d.email], ["Cohort", d.cohort],
+        ["Organization", d.organization], ["Role", d.role], ["Notes", d.notes]])}
+</table>
+<p style="margin:0 0 12px;"><strong>What happens next</strong></p>
+<p style="margin:0 0 24px;">We'll send the schedule, venue address and travel notes closer to the date. Add this address to your contacts so those don't land in spam.</p>
+<p style="margin:0 0 24px;">Something wrong above, or need to cancel? Reply to this email and we'll fix it.</p>
+<p style="margin:0;font-size:14px;color:#4a5875;">${esc(EVENT.contactName)} &middot; <a href="mailto:${esc(CONTACT)}" style="color:#0e6e63;">${esc(CONTACT)}</a></p>`),
+    text: [
+      `You're registered for ${EVENT.name}.`, ``,
+      `Thanks, ${first}. Your place is held.`, ``,
+      `When:  ${EVENT.dates}`,
+      `Where: ${EVENT.venue}, ${EVENT.location}`,
+      `Name:  ${d.name}`,
+      `Email: ${d.email}`,
+      d.cohort ? `Cohort: ${d.cohort}` : null,
+      d.organization ? `Organization: ${d.organization}` : null,
+      d.role ? `Role: ${d.role}` : null,
+      d.notes ? `Notes: ${d.notes}` : null, ``,
+      `We'll send the schedule and venue details closer to the date.`,
+      `Something wrong, or need to cancel? Just reply to this email.`, ``,
+      `${EVENT.contactName} - ${CONTACT}`,
+    ].filter((l) => l !== null).join("\n"),
+  };
+}
+
+function organizerEmail(d, meta) {
+  return {
+    subject: `New registration: ${d.name}${d.cohort ? ` (${d.cohort})` : ""}`,
+    html: shell(`
+<p style="margin:0 0 20px;${LABEL}">${esc(EVENT.name)} &middot; new registration</p>
+<h1 style="margin:0 0 24px;font-family:Georgia,serif;font-size:24px;line-height:1.25;font-weight:normal;color:#0f1b33;">${esc(d.name)}</h1>
+<table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-top:1px solid #c3cdd8;border-bottom:1px solid #c3cdd8;margin:0 0 24px;">
+${rows([["Email", d.email], ["Cohort", d.cohort], ["Organization", d.organization],
+        ["Role", d.role], ["Notes", d.notes], ["Registered", meta.registeredAt]])}
+</table>
+<p style="margin:0;font-size:14px;color:#4a5875;">Reply directly to <a href="mailto:${esc(d.email)}" style="color:#0e6e63;">${esc(d.email)}</a> to reach them.</p>`),
+    text: [
+      `New registration - ${EVENT.name}`, ``,
+      `Name:  ${d.name}`,
+      `Email: ${d.email}`,
+      d.cohort ? `Cohort: ${d.cohort}` : null,
+      d.organization ? `Organization: ${d.organization}` : null,
+      d.role ? `Role: ${d.role}` : null,
+      d.notes ? `Notes: ${d.notes}` : null,
+      `Registered: ${meta.registeredAt}`,
+    ].filter((l) => l !== null).join("\n"),
+  };
+}
+
+/* ---------- mail transport ---------- */
+
+let transport;
+function getTransport() {
+  if (transport) return transport;
+  const missing = ["SMTP_HOST", "SMTP_USER", "SMTP_PASS"].filter((k) => !process.env[k]);
+  if (missing.length) throw new Error(`Missing environment variables: ${missing.join(", ")}`);
+  const port = Number(process.env.SMTP_PORT || 587);
+  transport = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port,
+    secure: port === 465,
+    auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+  });
+  return transport;
+}
+
+const from = () => `"${FROM_NAME}" <${FROM_EMAIL}>`;
+
+function sendConfirmation(d) {
+  const { subject, html, text } = confirmationEmail(d);
+  return getTransport().sendMail({ from: from(), to: d.email, replyTo: CONTACT, subject, html, text });
+}
+
+function sendOrganizerNotice(d, meta) {
+  if (!ORGANIZERS.length) throw new Error("ORGANIZER_EMAILS is not set - nobody would be notified.");
+  const { subject, html, text } = organizerEmail(d, meta);
+  return getTransport().sendMail({
+    from: from(), to: ORGANIZERS.join(", "), replyTo: d.email, subject, html, text,
+  });
+}
+
+/* ---------- optional webhook (Google Sheet, Zapier, Make) ---------- */
+
+// Returns true only if a registration was genuinely delivered somewhere. An
+// unconfigured webhook must never be mistaken for a successful save.
+async function forwardToWebhook(payload) {
+  const url = process.env.REGISTRATIONS_WEBHOOK_URL;
+  if (!url) return false;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    });
+    if (!response.ok) throw new Error(`Webhook responded ${response.status}`);
+    return true;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+/* ---------- rate limit ---------- */
+
+// Best effort: lives in one instance's memory, so it slows a single noisy
+// client rather than guaranteeing a global cap. Enough for a private event.
+const WINDOW_MS = 10 * 60 * 1000;
+const MAX_PER_WINDOW = 5;
+const hits = new Map();
+
+function rateLimited(ip) {
+  const now = Date.now();
+  const recent = (hits.get(ip) || []).filter((t) => now - t < WINDOW_MS);
+  recent.push(now);
+  hits.set(ip, recent);
+  if (hits.size > 5000) hits.clear();
+  return recent.length > MAX_PER_WINDOW;
+}
+
+function clientIp(req) {
+  const fwd = req.headers["x-forwarded-for"];
+  if (typeof fwd === "string") return fwd.split(",")[0].trim();
+  return req.socket?.remoteAddress || "unknown";
+}
+
+/* ---------- handler ---------- */
+
+export default async function handler(req, res) {
+  if (req.method === "OPTIONS") {
+    res.setHeader("Allow", "POST, OPTIONS");
+    return res.status(204).end();
+  }
+  if (req.method !== "POST") {
+    res.setHeader("Allow", "POST, OPTIONS");
+    return res.status(405).json({ error: "Use POST to register." });
+  }
+
+  let body = req.body || {};
+  if (typeof body === "string") { try { body = JSON.parse(body); } catch { body = {}; } }
+
+  // Honeypot: hidden from people, filled in by naive bots. Answer as if it
+  // worked, so the bot learns nothing.
+  if (body.company_website) return res.status(200).json({ ok: true });
+
+  if (rateLimited(clientIp(req))) {
+    return res.status(429).json({
+      error: "That's a lot of registrations from one place. Try again in a few minutes.",
+    });
+  }
+
+  const { ok, data, errors } = validate(body);
+  if (!ok) return res.status(400).json({ error: "Some details need fixing.", errors });
+
+  const meta = { registeredAt: new Date().toISOString() };
+
+  const [confirmation, notice, webhook] = await Promise.allSettled([
+    sendConfirmation(data),
+    sendOrganizerNotice(data, meta),
+    forwardToWebhook({ ...data, ...meta }),
+  ]);
+
+  for (const [label, result] of [
+    ["confirmation email", confirmation],
+    ["organizer email", notice],
+    ["webhook", webhook],
+  ]) {
+    if (result.status === "rejected") {
+      console.error(`[register] ${label} failed for ${data.email}:`, result.reason?.message);
+    }
+  }
+
+  // The signup counts as captured if it reached the organizers by any route.
+  // A failed confirmation is worth flagging but not worth losing a registration.
+  const captured =
+    notice.status === "fulfilled" || (webhook.status === "fulfilled" && webhook.value === true);
+
+  if (!captured) {
+    return res.status(502).json({
+      error: `We couldn't record that. Please email ${CONTACT} directly.`,
+    });
+  }
+
+  return res.status(200).json({
+    ok: true,
+    confirmationSent: confirmation.status === "fulfilled",
+  });
+}
+APIEOF
+
+# --------------------------------------------------------- public/index.html
+cat > public/index.html <<'HTMLEOF'
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Immersion Week - Registration</title>
+<meta name="description" content="Register for Immersion Week. Five days with your program cohort.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:#e9edf1; --raised:#fff; --ink:#0f1b33; --ink-soft:#4a5875;
+    --signal:#0e6e63; --signal-lift:#0a564e; --rule:#c3cdd8; --alert:#9a2b1f;
+    --display:"Space Grotesk",system-ui,sans-serif;
+    --body:"Newsreader",Georgia,serif;
+    --data:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--body);
+         font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+  .eyebrow { font-family:var(--data); font-size:.6875rem; font-weight:500; letter-spacing:.16em;
+             text-transform:uppercase; color:var(--ink-soft); margin:0 0 1.25rem; }
+  h1 { font-family:var(--display); font-weight:700; font-size:clamp(2.25rem,7vw,3.75rem);
+       line-height:1.02; letter-spacing:-.025em; margin:0 0 1rem; }
+  .lede { font-size:1.1875rem; font-weight:300; color:var(--ink-soft); max-width:34rem; margin:0 0 2.5rem; }
+  .facts { display:grid; grid-template-columns:repeat(auto-fit,minmax(11rem,1fr)); gap:1.25rem 2rem;
+           border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+           padding:1.5rem 0; margin:0 0 3rem; }
+  .facts dt { font-family:var(--data); font-size:.6875rem; letter-spacing:.14em; text-transform:uppercase;
+              color:var(--ink-soft); margin:0 0 .375rem; }
+  .facts dd { margin:0; font-size:1.0625rem; }
+  .cohort { margin:0 0 3rem; }
+  .cohort-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(.5rem,1fr));
+                 gap:.375rem; margin:0 0 .75rem; }
+  .cohort-grid span { aspect-ratio:1; border-radius:50%; background:var(--rule);
+                      opacity:0; animation:bloom .5s ease forwards; }
+  .cohort-grid span.is-you { background:var(--signal); transform:scale(1.55); }
+  @keyframes bloom { to { opacity:1; } }
+  .cohort-note { font-family:var(--data); font-size:.6875rem; letter-spacing:.1em;
+                 text-transform:uppercase; color:var(--ink-soft); margin:0; }
+  .card { background:var(--raised); border:1px solid var(--rule); padding:clamp(1.5rem,4vw,2.5rem); }
+  h2 { font-family:var(--display); font-weight:500; font-size:1.375rem; letter-spacing:-.01em; margin:0 0 1.75rem; }
+  .field { margin:0 0 1.5rem; }
+  .field label { display:block; font-family:var(--data); font-size:.6875rem; font-weight:500;
+                 letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); margin:0 0 .5rem; }
+  .hint { display:block; font-family:var(--body); font-size:.875rem; letter-spacing:0;
+          text-transform:none; color:var(--ink-soft); margin:.25rem 0 0; }
+  .field input[type="text"], .field input[type="email"], .field textarea {
+    width:100%; font-family:var(--body); font-size:1.0625rem; color:var(--ink);
+    background:var(--paper); border:1px solid var(--rule); border-radius:0; padding:.75rem .875rem;
+    transition:border-color .15s ease, background .15s ease; }
+  .field textarea { min-height:5.5rem; resize:vertical; }
+  .field input:focus-visible, .field textarea:focus-visible,
+  button:focus-visible, input[type="checkbox"]:focus-visible {
+    outline:2px solid var(--signal); outline-offset:2px; }
+  .field input:hover, .field textarea:hover { background:var(--raised); }
+  .field.has-error input, .field.has-error textarea { border-color:var(--alert); }
+  .error { display:none; font-size:.875rem; color:var(--alert); margin:.375rem 0 0; }
+  .field.has-error .error { display:block; }
+  .consent { display:flex; gap:.75rem; align-items:flex-start;
+             border-top:1px solid var(--rule); padding-top:1.5rem; }
+  .consent input { margin-top:.375rem; accent-color:var(--signal); flex-shrink:0; }
+  .consent label { font-family:var(--body); font-size:.9375rem; letter-spacing:0;
+                   text-transform:none; color:var(--ink); margin:0; }
+  .honey { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+  button { font-family:var(--display); font-weight:500; font-size:1rem; letter-spacing:.01em;
+           color:#fff; background:var(--signal); border:0; border-radius:0;
+           padding:.9375rem 2rem; cursor:pointer; transition:background .15s ease; }
+  button:hover:not(:disabled) { background:var(--signal-lift); }
+  button:disabled { opacity:.55; cursor:progress; }
+  .form-foot { display:flex; flex-wrap:wrap; align-items:center; gap:1rem; margin-top:1.75rem; }
+  .form-status { font-size:.9375rem; color:var(--alert); margin:0; }
+  .done { display:none; }
+  .done h2 { margin-bottom:1rem; }
+  .done p { margin:0 0 1rem; }
+  .done p:last-child { margin-bottom:0; }
+  .done .to { font-family:var(--data); font-size:.9375rem; color:var(--signal); word-break:break-all; }
+  body.is-done .card form { display:none; }
+  body.is-done .done { display:block; }
+  footer { margin-top:2.5rem; font-size:.875rem; color:var(--ink-soft); }
+  footer a { color:var(--signal); }
+  @media (prefers-reduced-motion:reduce) {
+    *,*::before,*::after { animation-duration:.01ms !important; animation-delay:0ms !important;
+                           transition-duration:.01ms !important; }
+    .cohort-grid span { opacity:1; }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <p class="eyebrow">MIT Program Cohort</p>
+  <h1>Immersion Week</h1>
+  <p class="lede">Five days, one room, the people you went through the program with.</p>
+
+  <dl class="facts">
+    <div><dt>Dates</dt><dd>Monday 12 &ndash; Friday 16 October 2026</dd></div>
+    <div><dt>Location</dt><dd>Cambridge, MA</dd></div>
+    <div><dt>Venue</dt><dd>To be confirmed</dd></div>
+  </dl>
+
+  <section class="cohort" aria-labelledby="cohortNote">
+    <div class="cohort-grid" id="cohortGrid" aria-hidden="true"></div>
+    <p class="cohort-note" id="cohortNote"><span id="cohortCount">147</span> invited &middot; one dot each</p>
+  </section>
+
+  <section class="card">
+    <form id="form" novalidate>
+      <h2>Hold your place</h2>
+
+      <div class="field" id="f-name">
+        <label for="name">Full name</label>
+        <input type="text" id="name" name="name" autocomplete="name" required>
+        <p class="error" id="e-name"></p>
+      </div>
+
+      <div class="field" id="f-email">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" autocomplete="email" required>
+        <p class="error" id="e-email"></p>
+      </div>
+
+      <div class="field" id="f-cohort">
+        <label for="cohort">Program and year
+          <span class="hint">So we can seat you with the people you studied alongside.</span>
+        </label>
+        <input type="text" id="cohort" name="cohort" placeholder="e.g. System Design &amp; Management, 2019" required>
+        <p class="error" id="e-cohort"></p>
+      </div>
+
+      <div class="field" id="f-organization">
+        <label for="organization">Organization <span class="hint">Optional.</span></label>
+        <input type="text" id="organization" name="organization" autocomplete="organization">
+      </div>
+
+      <div class="field" id="f-role">
+        <label for="role">Role <span class="hint">Optional.</span></label>
+        <input type="text" id="role" name="role" autocomplete="organization-title">
+      </div>
+
+      <div class="field" id="f-notes">
+        <label for="notes">Anything we should know
+          <span class="hint">Access needs, dietary requirements, days you can't make.</span>
+        </label>
+        <textarea id="notes" name="notes"></textarea>
+      </div>
+
+      <div class="honey" aria-hidden="true">
+        <label for="company_website">Leave this field empty</label>
+        <input type="text" id="company_website" name="company_website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="field consent" id="f-consent">
+        <input type="checkbox" id="consent" name="consent">
+        <div>
+          <label for="consent">Email me about Immersion Week &mdash; confirmation now, schedule and venue details later. Nothing else, and you can stop it any time by replying.</label>
+          <p class="error" id="e-consent"></p>
+        </div>
+      </div>
+
+      <div class="form-foot">
+        <button type="submit" id="submit">Register</button>
+        <p class="form-status" id="status" role="status" aria-live="polite"></p>
+      </div>
+    </form>
+
+    <div class="done" id="done" tabindex="-1">
+      <h2>You're in.</h2>
+      <p>Confirmation on its way to <span class="to" id="sentTo"></span>. If it hasn't arrived in ten minutes, check spam and add us to your contacts.</p>
+      <p id="doneWarn" hidden>We recorded your registration, but the confirmation email didn't go through. We'll follow up by hand.</p>
+      <p>Schedule, venue address and travel notes follow closer to the date.</p>
+    </div>
+  </section>
+
+  <footer><p>Questions? <a href="mailto:organizers@example.com" id="contactLink">organizers@example.com</a></p></footer>
+
+</main>
+
+<script type="module">
+  /* Keep these in step with the EVENT block in api/register.js */
+  const CONFIG = { cohortSize: 147, contactEmail: "organizers@example.com" };
+
+  (function drawCohort() {
+    const grid = document.getElementById("cohortGrid");
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < CONFIG.cohortSize; i++) {
+      const dot = document.createElement("span");
+      dot.style.animationDelay = `${i * 6}ms`;
+      frag.appendChild(dot);
+    }
+    grid.appendChild(frag);
+    document.getElementById("cohortCount").textContent = CONFIG.cohortSize;
+  })();
+
+  const contact = document.getElementById("contactLink");
+  contact.textContent = CONFIG.contactEmail;
+  contact.href = `mailto:${CONFIG.contactEmail}`;
+
+  const form = document.getElementById("form");
+  const button = document.getElementById("submit");
+  const status = document.getElementById("status");
+
+  function clearErrors() {
+    for (const field of form.querySelectorAll(".field")) field.classList.remove("has-error");
+    status.textContent = "";
+  }
+
+  function showErrors(errors) {
+    let first = null;
+    for (const [key, message] of Object.entries(errors)) {
+      const field = document.getElementById(`f-${key}`);
+      const slot = document.getElementById(`e-${key}`);
+      if (!field || !slot) continue;
+      field.classList.add("has-error");
+      slot.textContent = message;
+      if (!first) first = document.getElementById(key);
+    }
+    if (first) first.focus();
+  }
+
+  form.addEventListener("submit", async (submitEvent) => {
+    submitEvent.preventDefault();
+    clearErrors();
+
+    const payload = {
+      name: form.name.value,
+      email: form.email.value,
+      cohort: form.cohort.value,
+      organization: form.organization.value,
+      role: form.role.value,
+      notes: form.notes.value,
+      consent: form.consent.checked,
+      company_website: form.company_website.value,
+    };
+
+    button.disabled = true;
+    button.textContent = "Registering...";
+
+    try {
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        if (result.errors) showErrors(result.errors);
+        status.textContent = result.error || "That didn't go through. Try again.";
+        return;
+      }
+
+      document.getElementById("sentTo").textContent = payload.email;
+      if (result.confirmationSent === false) document.getElementById("doneWarn").hidden = false;
+      const dots = document.querySelectorAll("#cohortGrid span");
+      if (dots.length) dots[Math.floor(dots.length / 2)].classList.add("is-you");
+      document.body.classList.add("is-done");
+      document.getElementById("done").focus();
+    } catch {
+      status.textContent = `Couldn't reach the server. Check your connection, or email ${CONFIG.contactEmail}.`;
+    } finally {
+      button.disabled = false;
+      button.textContent = "Register";
+    }
+  });
+</script>
+</body>
+</html>
+HTMLEOF
+
+# ------------------------------------------------------------------ server.js
+cat > server.js <<'SRVEOF'
+/* Local testing only. Vercel does not use this file.
+   Run: npm run dev  ->  http://localhost:3000                              */
+import http from "node:http";
+import fs from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import handler from "./api/register.js";
+
+const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "public");
+const PORT = Number(process.env.PORT || 3000);
+const TYPES = { ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript",
+                ".svg": "image/svg+xml", ".png": "image/png", ".ico": "image/x-icon" };
+
+function readBody(req) {
+  return new Promise((resolve) => {
+    let raw = "";
+    req.on("data", (c) => { raw += c; if (raw.length > 1e6) req.destroy(); });
+    req.on("end", () => { try { resolve(JSON.parse(raw || "{}")); } catch { resolve({}); } });
+  });
+}
+
+function decorate(res) {
+  res.status = (code) => { res.statusCode = code; return res; };
+  res.json = (payload) => {
+    res.setHeader("Content-Type", "application/json; charset=utf-8");
+    res.end(JSON.stringify(payload));
+    return res;
+  };
+  return res;
+}
+
+http.createServer(async (req, res) => {
+  const url = new URL(req.url, `http://${req.headers.host}`);
+  if (url.pathname === "/api/register") {
+    req.body = req.method === "POST" ? await readBody(req) : {};
+    return handler(req, decorate(res));
+  }
+  const target = path.join(ROOT, url.pathname === "/" ? "index.html" : url.pathname.slice(1));
+  if (!target.startsWith(ROOT)) { res.statusCode = 403; return res.end("Forbidden"); }
+  try {
+    const file = await fs.readFile(target);
+    res.setHeader("Content-Type", TYPES[path.extname(target)] || "application/octet-stream");
+    res.end(file);
+  } catch { res.statusCode = 404; res.end("Not found"); }
+}).listen(PORT, () => console.log(`Registration page: http://localhost:${PORT}`));
+SRVEOF
+
+# ------------------------------------------------------------------ README.md
+cat > README.md <<'MDEOF'
+# Event registration
+
+Registration page. On signup: the registrant gets a confirmation email, the
+organizers get an alert with reply-to set to the registrant.
+
+## Deploy in five minutes
+
+1. **Get an App Password.** Google Account -> Security -> 2-Step Verification
+   (turn on) -> App Passwords. Copy the 16 characters. Your normal Gmail
+   password will not work for SMTP.
+2. **Push this repo to GitHub.**
+3. **Import it at vercel.com/new.**
+4. **Settings -> Environment Variables.** Add every line from `.env.example`,
+   with real values. `ORGANIZER_EMAILS` is the one people forget.
+5. **Deploy, then register yourself on the live URL** before sending the link
+   to anyone else.
+
+## Edit your details
+
+- `api/register.js` - the `EVENT` block at the very top
+- `public/index.html` - the visible copy, and the `CONFIG` object at the bottom
+
+## Test locally
+
+    cp .env.example .env     # then fill it in
+    npm install
+    npm run dev              # http://localhost:3000
+
+## Keep a spreadsheet of registrations
+
+Set `REGISTRATIONS_WEBHOOK_URL` and every signup gets POSTed there as JSON.
+For a Google Sheet: add headers `registeredAt, name, email, cohort,
+organization, role, notes`, then Extensions -> Apps Script:
+
+    function doPost(e) {
+      const d = JSON.parse(e.postData.contents);
+      SpreadsheetApp.getActiveSheet().appendRow([
+        d.registeredAt, d.name, d.email, d.cohort, d.organization, d.role, d.notes
+      ]);
+      return ContentService.createTextOutput("ok");
+    }
+
+Deploy -> New deployment -> Web app -> execute as *me*, access *Anyone*.
+Paste the URL into the env var.
+
+## If email isn't arriving
+
+| Symptom | Cause |
+|---|---|
+| `Invalid login` | Using an account password instead of an App Password / API key |
+| `Missing environment variables` | Not set in the Vercel dashboard |
+| Works locally, fails deployed | Env vars not added to the host |
+| Lands in spam | `MAIL_FROM_EMAIL` domain has no SPF/DKIM. Send from the same domain as the SMTP account |
+MDEOF
+
+# ------------------------------------------------------------------ finish up
+npm install --silent 2>/dev/null || echo "npm install skipped - run it yourself"
+cp .env.example .env
+if command -v git >/dev/null 2>&1; then
+  git init -q
+  # Fall back to a repo-local identity if git has never been configured,
+  # otherwise the commit fails silently and you push an empty repo.
+  git config user.email >/dev/null 2>&1 || git config user.email "organizer@example.com"
+  git config user.name  >/dev/null 2>&1 || git config user.name  "Event Organizer"
+  git add -A
+  git commit -qm "Registration page with confirmation emails"
+  echo "  Committed $(git rev-list --count HEAD) commit to a new git repo."
+fi
+
+echo ""
+echo "  Done. Created ./event-registration"
+echo ""
+echo "  Next:"
+echo "    1. Fill in .env  (SMTP_PASS must be a Gmail App Password)"
+echo "    2. npm run dev   ->  http://localhost:3000"
+echo "    3. Push to GitHub, import at vercel.com/new, add the same env vars"
+echo ""
