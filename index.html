@@ -11,11 +11,26 @@ padding: 0;
 box-sizing: border-box;
 }
  
+html {
+scroll-behavior: smooth;
+scroll-padding-top: 20px;
+}
+
 body {
 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 background: #0F1629;
 color: #E8E8E8;
 line-height: 1.6;
+overflow-x: hidden;
+background:
+radial-gradient(circle at 15% 10%, rgba(0, 169, 157, 0.07), transparent 28%),
+radial-gradient(circle at 85% 28%, rgba(212, 165, 116, 0.05), transparent 30%),
+#0F1629;
+}
+
+::selection {
+background: rgba(0, 169, 157, 0.35);
+color: #FFFFFF;
 }
  
 /* HERO SECTION */
@@ -31,13 +46,35 @@ overflow: hidden;
 .hero::before {
 content: '';
 position: absolute;
-top: -50%;
-right: -10%;
-width: 500px;
-height: 500px;
-background: radial-gradient(circle, rgba(0, 169, 157, 0.1) 0%, transparent 70%);
-border-radius: 50%;
+inset: 0;
+background-image:
+radial-gradient(circle at 12% 18%, rgba(255,255,255,.8) 0 1px, transparent 1.5px),
+radial-gradient(circle at 72% 22%, rgba(255,255,255,.55) 0 1px, transparent 1.5px),
+radial-gradient(circle at 48% 70%, rgba(0,169,157,.75) 0 1px, transparent 1.5px),
+radial-gradient(circle at 88% 64%, rgba(212,165,116,.7) 0 1px, transparent 1.5px),
+radial-gradient(circle at 30% 84%, rgba(255,255,255,.45) 0 1px, transparent 1.5px);
+background-size: 210px 210px, 260px 260px, 320px 320px, 390px 390px, 470px 470px;
+opacity: .45;
 pointer-events: none;
+animation: starDrift 28s linear infinite;
+}
+
+.hero::after {
+content: '';
+position: absolute;
+width: 620px;
+height: 620px;
+right: -180px;
+top: -260px;
+border-radius: 50%;
+background: radial-gradient(circle, rgba(0,169,157,.16) 0%, rgba(0,169,157,.05) 38%, transparent 70%);
+filter: blur(2px);
+pointer-events: none;
+}
+
+@keyframes starDrift {
+from { transform: translate3d(0, 0, 0); }
+to { transform: translate3d(-45px, 30px, 0); }
 }
  
 .hero-content {
@@ -58,7 +95,9 @@ font-size: 3.5rem;
 font-weight: 700;
 margin-bottom: 15px;
 color: #FFFFFF;
-letter-spacing: -1px;
+letter-spacing: -1.2px;
+text-wrap: balance;
+text-shadow: 0 8px 30px rgba(0,0,0,.22);
 }
  
 .hero-subtitle {
@@ -99,7 +138,8 @@ border-radius: 6px;
 cursor: pointer;
 text-decoration: none;
 display: inline-block;
-transition: all 0.3s ease;
+transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease;
+box-shadow: 0 8px 24px rgba(0,0,0,.12);
 }
  
 .cta-primary {
@@ -539,8 +579,233 @@ font-weight: 600;
 margin-top: 15px;
 }
  
+
+/* LUMA REGISTRATION */
+.registration-kicker {
+color: #D4A574;
+font-size: 1.2rem;
+font-weight: 700;
+margin-bottom: 12px;
+}
+
+.registration-copy {
+color: #B8B8B8;
+font-size: 1rem;
+line-height: 1.8;
+max-width: 620px;
+margin: 0 auto 28px;
+}
+
+.luma-register-button {
+display: inline-block;
+width: auto;
+min-width: 240px;
+padding: 16px 36px;
+background: #E63946;
+color: #FFFFFF;
+font-weight: 700;
+font-size: 1.1rem;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+text-decoration: none;
+transition: all 0.3s ease;
+box-shadow: 0 8px 20px rgba(230, 57, 70, 0.18);
+}
+
+.luma-register-button:hover,
+.luma-register-button:focus {
+background: #d32f3f;
+transform: translateY(-2px);
+box-shadow: 0 10px 26px rgba(230, 57, 70, 0.32);
+outline: none;
+}
+
+.luma-register-button:focus-visible {
+box-shadow: 0 0 0 3px rgba(15, 22, 41, 0.9), 0 0 0 6px rgba(0, 169, 157, 0.7);
+}
+
+.registration-note {
+color: #A8A8A8;
+font-size: 0.9rem;
+margin-top: 22px;
+font-style: italic;
+}
+
+.countdown-wrap {
+max-width: 800px;
+margin: 0 auto 34px;
+text-align: center;
+}
+
+.countdown-label {
+color: #00A99D;
+font-size: 0.9rem;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 1.2px;
+margin-bottom: 12px;
+}
+
+.countdown {
+display: grid;
+grid-template-columns: repeat(4, minmax(72px, 1fr));
+gap: 12px;
+max-width: 520px;
+margin: 0 auto;
+}
+
+.countdown-unit {
+background: #1a2340;
+border: 1px solid rgba(0, 169, 157, 0.3);
+border-radius: 8px;
+padding: 14px 8px;
+}
+
+.countdown-number {
+display: block;
+font-size: 1.8rem;
+font-weight: 700;
+color: #FFFFFF;
+line-height: 1.1;
+}
+
+.countdown-text {
+display: block;
+font-size: 0.72rem;
+color: #A8A8A8;
+text-transform: uppercase;
+letter-spacing: 0.8px;
+margin-top: 6px;
+}
+
+/* EXECUTIVE POLISH */
+.section {
+position: relative;
+}
+
+.section-title {
+text-wrap: balance;
+letter-spacing: -0.5px;
+}
+
+.section-title::after {
+content: '';
+display: block;
+width: 54px;
+height: 2px;
+margin: 14px auto 0;
+background: linear-gradient(90deg, transparent, #00A99D, #D4A574, transparent);
+border-radius: 999px;
+}
+
+.schedule-day,
+.speaker-card,
+.experience-card,
+.hotel-card,
+.form-container,
+.countdown-unit {
+backdrop-filter: blur(8px);
+-webkit-backdrop-filter: blur(8px);
+}
+
+.schedule-day,
+.speaker-card,
+.experience-card,
+.hotel-card {
+box-shadow: 0 14px 34px rgba(0, 0, 0, 0.12);
+}
+
+.speaker-photo {
+height: 150px;
+background:
+radial-gradient(circle at 30% 20%, rgba(255,255,255,.09), transparent 35%),
+linear-gradient(135deg, #16354b 0%, #006b63 55%, #0F1629 100%);
+font-size: 3.4rem;
+position: relative;
+}
+
+.speaker-photo::after {
+content: '';
+position: absolute;
+inset: 0;
+background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+background-size: 24px 24px;
+pointer-events: none;
+}
+
+.registration-section {
+position: relative;
+overflow: hidden;
+}
+
+.registration-section::before {
+content: '';
+position: absolute;
+inset: 0;
+background: radial-gradient(circle at 50% 15%, rgba(0,169,157,.11), transparent 38%);
+pointer-events: none;
+}
+
+.registration-section .section {
+position: relative;
+z-index: 1;
+}
+
+.form-container {
+box-shadow: 0 24px 60px rgba(0,0,0,.28);
+border-color: rgba(212,165,116,.28);
+}
+
+.luma-register-button {
+position: relative;
+overflow: hidden;
+}
+
+.luma-register-button::after {
+content: '';
+position: absolute;
+top: -60%;
+left: -40%;
+width: 36%;
+height: 220%;
+background: linear-gradient(90deg, transparent, rgba(255,255,255,.24), transparent);
+transform: rotate(18deg);
+transition: left .55s ease;
+pointer-events: none;
+}
+
+.luma-register-button:hover::after {
+left: 120%;
+}
+
+.reveal {
+opacity: 0;
+transform: translateY(18px);
+transition: opacity .65s ease, transform .65s ease;
+}
+
+.reveal.is-visible {
+opacity: 1;
+transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+html { scroll-behavior: auto; }
+.hero::before { animation: none; }
+.reveal { opacity: 1; transform: none; transition: none; }
+.cta-button,
+.luma-register-button,
+.schedule-day,
+.speaker-card { transition: none; }
+}
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
+.hero {
+padding: 64px 18px 54px;
+}
+
 .hero-title {
 font-size: 2.5rem;
 }
@@ -553,8 +818,17 @@ font-size: 1.3rem;
 font-size: 1rem;
 }
  
+.section {
+padding: 54px 16px;
+}
+
 .section-title {
 font-size: 2rem;
+margin-bottom: 30px;
+}
+
+.form-container {
+padding: 28px 20px;
 }
  
 .form-row {
@@ -572,6 +846,33 @@ width: 100%;
 .stats {
 grid-template-columns: 1fr 1fr;
 }
+
+.countdown {
+grid-template-columns: repeat(2, 1fr);
+}
+
+.luma-register-button {
+width: 100%;
+min-width: 0;
+}
+
+.schedule-day,
+.experience-card,
+.hotel-card {
+padding: 24px 20px;
+}
+}
+
+@media (max-width: 480px) {
+.hero-title { font-size: 2.05rem; }
+.hero-subtitle { font-size: 1.15rem; }
+.hero-emoji { font-size: 3rem; }
+.stats { grid-template-columns: 1fr 1fr; gap: 18px; }
+.stat-number { font-size: 2rem; }
+.countdown { gap: 8px; }
+.countdown-unit { padding: 12px 6px; }
+.countdown-number { font-size: 1.55rem; }
+.speakers-grid { grid-template-columns: 1fr; }
 }
 </style>
  
@@ -854,202 +1155,36 @@ Book your own flights to Houston. Ground transportation is your responsibility. 
 <div class="registration-section" id="registration">
 <div class="section">
 <h2 class="section-title">Register for CXO Off-Campus Houston</h2>
- 
-<div class="form-container">
-<p style="text-align: center; color: #D4A574; margin-bottom: 30px; font-weight: 600;">
-Fill out the form below to register. You'll receive a confirmation email immediately.
+
+<div class="countdown-wrap" aria-label="Countdown to CXO Off-Campus Houston">
+<div class="countdown-label">Countdown to Houston</div>
+<div class="countdown" id="eventCountdown">
+<div class="countdown-unit"><span class="countdown-number" id="countDays">--</span><span class="countdown-text">Days</span></div>
+<div class="countdown-unit"><span class="countdown-number" id="countHours">--</span><span class="countdown-text">Hours</span></div>
+<div class="countdown-unit"><span class="countdown-number" id="countMinutes">--</span><span class="countdown-text">Minutes</span></div>
+<div class="countdown-unit"><span class="countdown-number" id="countSeconds">--</span><span class="countdown-text">Seconds</span></div>
+</div>
+</div>
+
+<div class="form-container" style="text-align: center;">
+<p class="registration-kicker">Reserve Your Seat</p>
+<p class="registration-copy">
+Complete your registration through Luma. After registering, Luma will send your event confirmation and keep your registration details together in one place.
 </p>
- 
-<form id="registrationForm" method="GET" target="_blank" action="https://docs.google.com/forms/d/YOUR_FORM_ID/viewform">
-<div class="form-section-title">Personal Information</div>
-<div class="form-row">
-<div class="form-group">
-<label class="required">First Name</label>
-<input type="text" placeholder="Your first name" required>
-</div>
-<div class="form-group">
-<label class="required">Last Name</label>
-<input type="text" placeholder="Your last name" required>
-</div>
-</div>
- 
-<div class="form-row">
-<div class="form-group">
-<label class="required">Email</label>
-<input type="email" placeholder="your@email.com" required>
-</div>
-<div class="form-group">
-<label class="required">Phone Number</label>
-<input type="tel" placeholder="+1-555-0000" required>
-</div>
-</div>
- 
-<div class="form-row">
-<div class="form-group">
-<label>WhatsApp Number (if different)</label>
-<input type="tel" placeholder="+1-555-0001">
-</div>
-<div class="form-group">
-<label>LinkedIn Profile (optional)</label>
-<input type="text" placeholder="https://linkedin.com/in/yourprofile">
-</div>
-</div>
- 
-<div class="form-section-title">Professional Information</div>
- 
-<div class="form-row">
-<div class="form-group">
-<label class="required">Company/Organization</label>
-<input type="text" placeholder="Your company" required>
-</div>
-<div class="form-group">
-<label class="required">Job Title</label>
-<input type="text" placeholder="e.g., VP of Engineering" required>
-</div>
-</div>
- 
-<div class="form-row">
-<div class="form-group">
-<label class="required">Industry</label>
-<select required>
-<option value="">Select an industry</option>
-<option value="Technology">Technology</option>
-<option value="Energy">Energy</option>
-<option value="Manufacturing">Manufacturing</option>
-<option value="Healthcare">Healthcare</option>
-<option value="Finance">Finance</option>
-<option value="Aerospace">Aerospace</option>
-<option value="Government">Government</option>
-<option value="Education">Education</option>
-<option value="Other">Other</option>
-</select>
-</div>
-<div class="form-group">
-<label class="required">Country</label>
-<input type="text" placeholder="e.g., United States" required>
-</div>
-</div>
- 
-<div class="form-section-title">MIT Program Information</div>
- 
-<div class="form-row full">
-<div class="form-group">
-<label class="required">MIT Program Track</label>
-<select required>
-<option value="">Select your track</option>
-<option value="CTO (Chief Technology Officer)">CTO (Chief Technology Officer)</option>
-<option value="CDO (Chief Data Officer)">CDO (Chief Data Officer)</option>
-<option value="CSO (Chief Security Officer)">CSO (Chief Security Officer)</option>
-<option value="CPO (Chief Product Officer)">CPO (Chief Product Officer)</option>
-</select>
-</div>
-</div>
- 
-<div class="form-section-title">Bio & Interests</div>
- 
-<div class="form-group form-row full">
-<label class="required">Professional Bio</label>
-<textarea placeholder="Tell us about your background and expertise (100-200 words)" required></textarea>
-</div>
- 
-<div class="form-group form-row full">
-<label class="required">Areas of Interest (Select all that apply)</label>
-<div class="checkbox-group">
-<div class="checkbox-item">
-<input type="checkbox" value="AI & Machine Learning">
-<label>AI & Machine Learning</label>
-</div>
-<div class="checkbox-item">
-<input type="checkbox" value="Infrastructure & Operations">
-<label>Infrastructure & Operations</label>
-</div>
-<div class="checkbox-item">
-<input type="checkbox" value="Energy & Sustainability">
-<label>Energy & Sustainability</label>
-</div>
-<div class="checkbox-item">
-<input type="checkbox" value="Space & Autonomy">
-<label>Space & Autonomy</label>
-</div>
-<div class="checkbox-item">
-<input type="checkbox" value="Impact & Innovation">
-<label>Impact & Innovation</label>
-</div>
-<div class="checkbox-item">
-<input type="checkbox" value="Leadership & Strategy">
-<label>Leadership & Strategy</label>
+
+<a href="https://luma.com/event/evt-AtRp1ZnGzGnYZkb"
+   class="luma-register-button luma-checkout--button"
+   data-luma-action="checkout"
+   data-luma-event-id="evt-AtRp1ZnGzGnYZkb"
+   aria-label="Register for CXO Off-Campus Houston through Luma">
+🚀 Secure My Spot
+</a>
+
+<p class="registration-note">Registration is managed securely through Luma.</p>
 </div>
 </div>
 </div>
- 
-<div class="form-section-title">Logistics</div>
- 
-<div class="form-group form-row full">
-<label>Dietary Restrictions or Allergies</label>
-<input type="text" placeholder="Please describe any dietary needs">
-</div>
- 
-<div class="form-group form-row full">
-<label>Accessibility Needs</label>
-<input type="text" placeholder="Please describe any accommodations needed">
-</div>
- 
-<div class="form-group form-row full">
-<label class="required">Can you attend all four days? (Oct 19-22)</label>
-<div class="radio-group">
-<div class="radio-item">
-<input type="radio" name="attendance" value="Yes, all 4 days" required>
-<label>Yes, all 4 days (Oct 19-22)</label>
-</div>
-<div class="radio-item">
-<input type="radio" name="attendance" value="Partial">
-<label>Partial attendance</label>
-</div>
-</div>
-</div>
- 
-<div class="form-group form-row full" id="daysSelect" style="display: none;">
-<label class="required">Which days can you attend?</label>
-<div class="checkbox-group">
-<div class="checkbox-item">
-<input type="checkbox" value="Day 1: Oct 19">
-<label>Day 1: Monday, October 19</label>
-</div>
-<div class="checkbox-item">
-<input type="checkbox" value="Day 2: Oct 20">
-<label>Day 2: Tuesday, October 20</label>
-</div>
-<div class="checkbox-item">
-<input type="checkbox" value="Day 3: Oct 21">
-<label>Day 3: Wednesday, October 21</label>
-</div>
-<div class="checkbox-item">
-<input type="checkbox" value="Day 4: Oct 22">
-<label>Day 4: Thursday, October 22</label>
-</div>
-</div>
-</div>
- 
-<div class="form-section-title">Confirmation</div>
- 
-<div class="checkbox-item" style="margin-bottom: 15px;">
-<input type="checkbox" required>
-<label class="required">I confirm that my information is accurate and I'm ready to join CXO Off-Campus Houston</label>
-</div>
- 
-<div class="checkbox-item">
-<input type="checkbox" checked>
-<label>Keep me updated on CXO Off-Campus events and announcements</label>
-</div>
- 
-<p class="form-info">This form is powered by Google Forms. You will be redirected to complete your registration and receive a confirmation email immediately.</p>
- 
-<button type="submit" class="submit-btn">🚀 Secure My Spot</button>
-</form>
-</div>
-</div>
-</div>
- 
+
 <footer>
 <p class="footer-organizers">Organized by Monica Delgado, Ph.D. · Cory Martin · Chet Bhat</p>
 <p>An immersive learning experience for the CXO community</p>
@@ -1058,22 +1193,60 @@ Fill out the form below to register. You'll receive a confirmation email immedia
 </footer>
  
 <script>
-document.querySelectorAll('input[name="attendance"]').forEach(radio => {
-radio.addEventListener('change', function() {
-const daysSelect = document.getElementById('daysSelect');
-if (this.value === 'Partial') {
-daysSelect.style.display = 'block';
-} else {
-daysSelect.style.display = 'none';
-}
-});
-});
-</script>
- 
-=====================================================
- 
-END OF CODE
- 
-=====================================================
- 
+(function () {
+const eventStart = new Date('2026-10-19T11:00:00-05:00').getTime();
+const countdown = document.getElementById('eventCountdown');
 
+function updateCountdown() {
+const now = Date.now();
+const distance = eventStart - now;
+
+if (distance <= 0) {
+if (countdown) {
+countdown.innerHTML = '<div class="countdown-unit" style="grid-column: 1 / -1;"><span class="countdown-number" style="font-size:1.2rem;">Houston is underway 🚀</span><span class="countdown-text">October 19-22, 2026</span></div>';
+}
+return;
+}
+
+const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+const minutes = Math.floor((distance / (1000 * 60)) % 60);
+const seconds = Math.floor((distance / 1000) % 60);
+
+document.getElementById('countDays').textContent = days;
+document.getElementById('countHours').textContent = String(hours).padStart(2, '0');
+document.getElementById('countMinutes').textContent = String(minutes).padStart(2, '0');
+document.getElementById('countSeconds').textContent = String(seconds).padStart(2, '0');
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+})();
+</script>
+<script id="luma-checkout" src="https://embed.lu.ma/checkout-button.js"></script>
+
+<script>
+(function () {
+  const revealTargets = document.querySelectorAll(
+    '.schedule-day, .speaker-card, .experience-card, .hotel-card, .countdown-wrap, .form-container'
+  );
+
+  revealTargets.forEach((element) => element.classList.add('reveal'));
+
+  if (!('IntersectionObserver' in window)) {
+    revealTargets.forEach((element) => element.classList.add('is-visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+
+  revealTargets.forEach((element) => observer.observe(element));
+})();
+</script>
