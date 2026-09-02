@@ -211,6 +211,44 @@ text-align: center;
 margin-bottom: 30px;
 }
 
+/* PARTNERS */
+.partners-grid {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+gap: 36px;
+margin-top: 36px;
+}
+
+.partner-logo {
+background: #FFFFFF;
+border-radius: 16px;
+padding: 26px 42px;
+display: flex;
+align-items: center;
+justify-content: center;
+box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.partner-logo:hover {
+transform: translateY(-4px);
+box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
+}
+
+.partner-logo img {
+display: block;
+height: 46px;
+width: auto;
+max-width: 220px;
+}
+
+@media (max-width: 480px) {
+.partner-logo { padding: 18px 28px; }
+.partner-logo img { height: 34px; }
+}
+
 /* SCHEDULE */
 .schedule-grid {
 display: grid;
@@ -1188,6 +1226,16 @@ aria-label="Register for CXO Off-Campus Houston through Luma">
 
 <p class="registration-note">Registration is managed securely through Luma.</p>
 </div>
+</div>
+</div>
+
+<!-- PARTNERS SECTION -->
+<div class="section" id="partners">
+<h2 class="section-title">Our Partners</h2>
+<p class="section-subtitle">Proudly supported by</p>
+<div class="partners-grid">
+<div class="partner-logo"><img src="hpe-logo.png" alt="Hewlett Packard Enterprise (HPE)" loading="lazy"></div>
+<div class="partner-logo"><img src="toga-technology-logo.png" alt="TOGA Technology" loading="lazy"></div>
 </div>
 </div>
 
