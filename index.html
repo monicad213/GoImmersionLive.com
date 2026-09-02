@@ -81,6 +81,43 @@ color: #FFFFFF;
   font-weight: 500;
 }
 
+.hx__presented {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 0 0 2rem;
+}
+
+.hx__presented-label {
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--hx-muted);
+  margin-right: 2px;
+}
+
+.hx__presented-logo {
+  background: #FFFFFF;
+  border-radius: 10px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hx__presented-logo img {
+  display: block;
+  height: 26px;
+  width: auto;
+  max-width: 140px;
+}
+
+@media (max-width: 480px) {
+  .hx__presented-logo img { height: 22px; }
+}
+
 /* ---- the cost strip: the point of this rewrite ---- */
 .hx__cost {
   display: inline-flex;
@@ -900,6 +937,12 @@ padding: 24px 20px;
      since previously that only lived in the post-registration Luma email. -->
 <section class="hx">
 <div class="hx__inner">
+
+<div class="hx__presented">
+<span class="hx__presented-label">Presented by</span>
+<span class="hx__presented-logo"><img src="hpe-logo.png" alt="Hewlett Packard Enterprise (HPE)" loading="lazy"></span>
+<span class="hx__presented-logo"><img src="toga-technology-stacked-logo.png" alt="TOGA Technology" loading="lazy"></span>
+</div>
 
 <p class="hx__glyphs" aria-hidden="true">🚀🤖🛰️</p>
 
