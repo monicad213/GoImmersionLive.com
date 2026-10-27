@@ -964,6 +964,7 @@ You arrange your own flights, hotel, and ground transportation.
 <div class="hx__actions">
 <a class="hx__btn hx__btn--primary luma-checkout--button" href="https://luma.com/event/evt-AtRp1ZnGzGnYZkb" data-luma-action="checkout" data-luma-event-id="evt-AtRp1ZnGzGnYZkb" aria-label="Register for CXO Off-Campus Houston through Luma">Secure your spot</a>
 <a class="hx__btn hx__btn--secondary" href="#schedule">See the schedule</a>
+<a class="hx__btn hx__btn--secondary" href="#experience">See the photos</a>
 </div>
 
 <p class="hx__scarcity">
@@ -995,6 +996,58 @@ You arrange your own flights, hotel, and ground transportation.
 <div class="stat-number">44</div>
 <div class="stat-label">Countries</div>
 </div>
+</div>
+</div>
+
+<!-- EXPERIENCE SECTION (event photos) -->
+<style>
+.experience-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.experience-gallery a {
+  display: block;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid #24304F;
+  background: #1a2340;
+  aspect-ratio: 4 / 3;
+}
+.experience-gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.experience-gallery a:hover img,
+.experience-gallery a:focus-visible img {
+  transform: scale(1.04);
+}
+.experience-gallery a:focus-visible {
+  outline: 2px solid #D4A574;
+  outline-offset: 3px;
+}
+@media (max-width: 768px) {
+  .experience-gallery { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+}
+@media (max-width: 480px) {
+  .experience-gallery { grid-template-columns: 1fr; }
+}
+</style>
+
+<div class="section" id="experience">
+<h2 class="section-title">Experience</h2>
+<p class="section-subtitle">Moments from CXO Off-Campus Houston</p>
+
+<div class="experience-gallery">
+<a href="photos/experience-1.jpg" target="_blank" rel="noopener"><img src="photos/experience-1.jpg" alt="Global CXO 2026 Summit attendees group photo" loading="lazy" style="object-position:center"></a>
+<a href="photos/experience-2.jpg" target="_blank" rel="noopener"><img src="photos/experience-2.jpg" alt="Cohort group photo with a space shuttle launch backdrop" loading="lazy" style="object-position:center 88%"></a>
+<a href="photos/experience-3.jpg" target="_blank" rel="noopener"><img src="photos/experience-3.jpg" alt="Cohort in front of Space Center Houston, NASA Johnson Space Center" loading="lazy" style="object-position:center"></a>
+<a href="photos/experience-4.jpg" target="_blank" rel="noopener"><img src="photos/experience-4.jpg" alt="Attendees at a golf outing during the summit" loading="lazy" style="object-position:center"></a>
+<a href="photos/experience-5.jpg" target="_blank" rel="noopener"><img src="photos/experience-5.jpg" alt="Attendees networking on the outdoor terrace" loading="lazy" style="object-position:center 60%"></a>
+<a href="photos/experience-6.jpg" target="_blank" rel="noopener"><img src="photos/experience-6.jpg" alt="Attendee outside The Moonwalkers exhibit at Space Center Houston" loading="lazy" style="object-position:center"></a>
 </div>
 </div>
 
